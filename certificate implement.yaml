@@ -1,0 +1,15 @@
+Steps:
+Backup of current image configuration
+oc get image.config.openshift.io/cluster -oyaml > image.yaml
+
+Create the CM for Jfrog certs in openshift-config namespace
+oc create cm jfrog-creds -n openshift-config --from-file=artifactory.jfrog.sbi:443=jfrog.crt
+
+Patch the image.config.openshift.io/cluster configuration
+oc patch image.config.openshift.io/cluster \
+  --patch '{"spec":{"additionalTrustedCA":{"name":"jfrog-creds"}}}' \
+  --type=merge
+
+Monitor the cluster ==> oc get mcp
+- Machine config update
+- Node trust store updated  with Cert
