@@ -13,3 +13,21 @@ oc patch image.config.openshift.io/cluster \
 Monitor the cluster ==> oc get mcp
 - Machine config update
 - Node trust store updated  with Cert
+
+✅ 1. Check ConfigMap attached or not
+oc get image.config.openshift.io/cluster -o yaml | grep -A5 additionalTrustedCA
+
+👉 Expected output:
+
+additionalTrustedCA:
+  name: jfrog-creds
+
+✔ Confirm karta hai ki cluster config me CM attach ho gaya
+
+✅ 2. Verify ConfigMap content
+oc get cm jfrog-creds -n openshift-config -o yaml
+
+👉 Check:
+
+key name: artifactory.jfrog.sbi:443
+cert properly present hai
