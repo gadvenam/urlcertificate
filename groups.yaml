@@ -1,0 +1,5 @@
+EPAY_OCP_BANK --This groups required application namespace admin access
+EPAY_OCP_DEVELOPER  --this groups required application namespace view access
+EPAY_OCP_DEVOPS   --This groups required application namespace admin access
+EPAY_OCP_MERC_SUPPORT  --this groups required application namespace view access
+EPAY_OCP_PROD_SUPPORT  --this groups required application namespace view access
