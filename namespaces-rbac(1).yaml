@@ -1,0 +1,8090 @@
+# =============================================================
+# SBI ePay — OpenShift Namespace + RBAC Manifest
+# Total namespaces : 94
+# App namespaces   : 76  (with group RoleBindings)
+# Platform ns      : 18  (namespace only, no group RBAC)
+# Groups           : 5
+# Generated        : 2026-06-17
+# Apply            : oc apply -f namespaces-rbac.yaml
+# =============================================================
+
+# ═══════════════════════════════════════════════════════════════
+# SECTION 1 — OpenShift Groups
+# ═══════════════════════════════════════════════════════════════
+
+# Bank team — admin access to all application namespaces
+---
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: EPAY_OCP_BANK
+  labels:
+    managed-by: "epay-rbac"
+    default-role: "admin"
+users: []
+
+# Developer team — view access to all application namespaces
+---
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: EPAY_OCP_DEVELOPER
+  labels:
+    managed-by: "epay-rbac"
+    default-role: "view"
+users: []
+
+# DevOps team — admin access to all application namespaces
+---
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: EPAY_OCP_DEVOPS
+  labels:
+    managed-by: "epay-rbac"
+    default-role: "admin"
+users: []
+
+# Merchant support — view access to all application namespaces
+---
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: EPAY_OCP_MERC_SUPPORT
+  labels:
+    managed-by: "epay-rbac"
+    default-role: "view"
+users: []
+
+# Production support — view access to all application namespaces
+---
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: EPAY_OCP_PROD_SUPPORT
+  labels:
+    managed-by: "epay-rbac"
+    default-role: "view"
+users: []
+
+# ═══════════════════════════════════════════════════════════════
+# SECTION 2 — Namespaces
+# ═══════════════════════════════════════════════════════════════
+
+# ── SIT namespaces (18) ──────────────────────────────────────
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-admin
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-bridge
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-communication
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-frontend
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-integration
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-istio-system
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-kafka
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+  annotations:
+    openshift.io/display-name: "sit-kafka"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-kms
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-merchant
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+  annotations:
+    openshift.io/display-name: "sit-merchant"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-notification
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+  annotations:
+    openshift.io/display-name: "sit-notification"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-rns
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-secrets
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-simulators
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sit-transaction
+  labels:
+    managed-by: "epay-rbac"
+    environment: "sit"
+    namespace-type: "application"
+  annotations:
+    openshift.io/display-name: "sit-transaction"
+
+# ── UAT namespaces (20) ──────────────────────────────────────
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-admin
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-bridge
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-common
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-communication
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-frontend
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-integration
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-istio-system
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-kafka
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-kms
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-merchant
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-notification
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-rns
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-sbiepay-test
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-secrets
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-simulators
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat-transaction
+  labels:
+    managed-by: "epay-rbac"
+    environment: "uat"
+    namespace-type: "application"
+
+# ── DEV namespaces (26) ──────────────────────────────────────
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-admin
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-bridge
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-cache
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+  annotations:
+    openshift.io/display-name: "dev-cache"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-cdc
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-cdc-redhat
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-communication
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+  annotations:
+    openshift.io/display-name: "dev-communication"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-epay-admin-service
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-epaybridge
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-frontend
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-integration
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-istio-system
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-kafka
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+  annotations:
+    openshift.io/display-name: "dev-kafka"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-kms
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-merchant
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-merchant-simulator
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-notification
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-rns
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-secrets
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-simulators
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-spark
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-spark-operator
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-transaction
+  labels:
+    managed-by: "epay-rbac"
+    environment: "dev"
+    namespace-type: "application"
+  annotations:
+    openshift.io/display-name: "dev-transaction"
+
+# ── INT namespaces (14) ──────────────────────────────────────
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-admin
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-bridge
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-frontend
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-istio-system
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-kafka
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-kms
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-merchant
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-notification
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-rns
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-secrets
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-simulators
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: int-transaction
+  labels:
+    managed-by: "epay-rbac"
+    environment: "int"
+    namespace-type: "application"
+
+# ── PREPROD namespaces (1) ──────────────────────────────────────
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: preprod-transaction
+  labels:
+    managed-by: "epay-rbac"
+    environment: "preprod"
+    namespace-type: "application"
+
+# ── PRE-PROD namespaces (1) ──────────────────────────────────────
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-kafka
+  labels:
+    managed-by: "epay-rbac"
+    environment: "pre-prod"
+    namespace-type: "application"
+
+# ── PLATFORM namespaces (14) ──────────────────────────────────────
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quay-enterprise
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+  annotations:
+    openshift.io/display-name: "quay-enterprise"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: spark-operator
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+  annotations:
+    openshift.io/display-name: "Spark Application"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: stoarges3
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: streams-kafka-console
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: telnet
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tracing-system
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trident
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trident-pvc
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-admin
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: discovery
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dynatrace
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-cni
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-system
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kiali
+  labels:
+    managed-by: "epay-rbac"
+    environment: "platform"
+    namespace-type: "platform"
+
+# ═══════════════════════════════════════════════════════════════
+# SECTION 3 — RoleBindings (application namespaces only)
+# 76 namespaces × 5 groups = 380 RoleBindings
+# ═══════════════════════════════════════════════════════════════
+
+# ── SIT RoleBindings (17 namespaces × 5 groups) ────────────────────
+
+# Namespace: sit-admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-bridge
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-communication
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-epay-common
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-frontend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-gemfire
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-integration
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-kafka
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-kms
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-merchant
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-notification
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-offline-jobs
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-rns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-sbiepay
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-secrets
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-simulators
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: sit-transaction
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: sit-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: sit-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: sit-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: sit-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: sit-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# ── UAT RoleBindings (19 namespaces × 5 groups) ────────────────────
+
+# Namespace: uat-admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-bridge
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-common
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-communication
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-epay-common
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-frontend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-gemfire
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-integration
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-kafka
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-kms
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-merchant
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-notification
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-offline-jobs
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-rns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-sbiepay
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-sbiepay-test
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-sbiepay-test
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-sbiepay-test
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-sbiepay-test
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-sbiepay-test
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-sbiepay-test
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-secrets
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-simulators
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: uat-transaction
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: uat-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: uat-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: uat-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: uat-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# ── DEV RoleBindings (25 namespaces × 5 groups) ────────────────────
+
+# Namespace: dev-admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-bridge
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-cache
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-cache
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-cache
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-cache
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-cache
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-cache
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-cdc
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-cdc
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-cdc
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-cdc
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-cdc
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-cdc
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-cdc-redhat
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-cdc-redhat
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-cdc-redhat
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-cdc-redhat
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-cdc-redhat
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-cdc-redhat
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-communication
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-communication
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-epay-admin-service
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-epay-admin-service
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-epay-admin-service
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-epay-admin-service
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-epay-admin-service
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-epay-admin-service
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-epay-common
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-epaybridge
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-epaybridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-epaybridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-epaybridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-epaybridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-epaybridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-frontend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-gemfire
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-integration
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-integration
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-kafka
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-kms
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-merchant
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-merchant-simulator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-merchant-simulator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-merchant-simulator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-merchant-simulator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-merchant-simulator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-merchant-simulator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-notification
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-offline-jobs
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-offline-jobs
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-rns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-sbiepay
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-secrets
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-simulators
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-spark
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-spark
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-spark
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-spark
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-spark
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-spark
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-spark-operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-spark-operator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-spark-operator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-spark-operator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-spark-operator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-spark-operator
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: dev-transaction
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: dev-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: dev-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: dev-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: dev-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: dev-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# ── INT RoleBindings (13 namespaces × 5 groups) ────────────────────
+
+# Namespace: int-admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-admin
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-bridge
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-bridge
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-epay-common
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-epay-common
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-frontend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-frontend
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-gemfire
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-gemfire
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-kafka
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-kms
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-kms
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-merchant
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-merchant
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-notification
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-notification
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-rns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-rns
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-secrets
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-secrets
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-simulators
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-simulators
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# Namespace: int-transaction
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: int-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: int-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: int-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: int-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: int-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# ── PREPROD RoleBindings (1 namespaces × 5 groups) ────────────────────
+
+# Namespace: preprod-transaction
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: preprod-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: preprod-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: preprod-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: preprod-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: preprod-transaction
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# ── PRE-PROD RoleBindings (1 namespaces × 5 groups) ────────────────────
+
+# Namespace: pre-prod-kafka
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_BANK"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_BANK
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVELOPER"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVELOPER
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_DEVOPS"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_DEVOPS
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_MERC_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-kafka
+  labels:
+    managed-by: "epay-rbac"
+    group: "EPAY_OCP_PROD_SUPPORT"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+
+
+# ═══════════════════════════════════════════════════════════════
+# SECTION 4 — ServiceAccount: cicd-sa
+# Namespace : dev-sbiepay
+# Role      : cluster-admin (ClusterRoleBinding)
+# ═══════════════════════════════════════════════════════════════
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cicd-sa
+  namespace: dev-sbiepay
+  labels:
+    managed-by: "epay-rbac"
+    purpose: "cicd-pipeline"
+  annotations:
+    description: "CI/CD service account with cluster-admin access for pipeline operations"
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cicd-sa-cluster-admin
+  labels:
+    managed-by: "epay-rbac"
+    serviceaccount: "cicd-sa"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: cicd-sa
+  namespace: dev-sbiepay
