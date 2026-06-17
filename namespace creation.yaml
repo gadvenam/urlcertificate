@@ -1,0 +1,95 @@
+pre-prod-kafka                                                         Active
+preprod-transaction                                                    Active
+quay-enterprise                                    quay-enterprise     Active
+sit-admin                                                              Active
+sit-bridge                                                             Active
+sit-communication                                                      Active
+sit-epay-common                                                        Active
+sit-frontend                                                           Active
+sit-gemfire                                                            Active
+sit-integration                                                        Active
+sit-istio-system                                                       Active
+sit-kafka                                          sit-kafka           Active
+sit-kms                                                                Active
+sit-merchant                                       sit-merchant        Active
+sit-notification                                   sit-notification    Active
+sit-offline-jobs                                                       Active
+sit-rns                                                                Active
+sit-sbiepay                                                            Active
+sit-secrets                                                            Active
+sit-simulators                                                         Active
+sit-transaction                                    sit-transaction     Active
+spark-operator                                     Spark Application   Active
+stoarges3                                                              Active
+streams-kafka-console                                                  Active
+telnet                                                                 Active
+tracing-system                                                         Active
+trident                                                                Active
+trident-pvc                                                            Active
+uat-admin                                                              Active
+uat-bridge                                                             Active
+uat-common                                                             Active
+uat-communication                                                      Active
+uat-epay-common                                                        Active
+uat-frontend                                                           Active
+uat-gemfire                                                            Active
+uat-integration                                                        Active
+uat-istio-system                                                       Active
+uat-kafka                                                              Active
+uat-kms                                                                Active
+uat-merchant                                                           Active
+uat-notification                                                       Active
+uat-offline-jobs                                                       Active
+uat-rns                                                                Active
+uat-sbiepay                                                            Active
+uat-sbiepay-test                                                       Active
+uat-secrets                                                            Active
+uat-simulators                                                         Active
+uat-transaction                                                        Active
+dev-admin                                                              Active
+dev-bridge                                                             Active
+dev-cache                                          dev-cache           Active
+dev-cdc                                                                Active
+dev-cdc-redhat                                                         Active
+dev-communication                                  dev-communication   Active
+dev-epay-admin-service                                                 Active
+dev-epay-common                                                        Active
+dev-epaybridge                                                         Active
+dev-frontend                                                           Active
+dev-gemfire                                                            Active
+dev-integration                                                        Active
+dev-istio-system                                                       Active
+dev-kafka                                          dev-kafka           Active
+dev-kms                                                                Active
+dev-merchant                                                           Active
+dev-merchant-simulator                                                 Active
+dev-notification                                                       Active
+dev-offline-jobs                                                       Active
+dev-rns                                                                Active
+dev-sbiepay                                                            Active
+dev-secrets                                                            Active
+dev-simulators                                                         Active
+dev-spark                                                              Active
+dev-spark-operator                                                     Active
+dev-transaction                                    dev-transaction     Active
+devops-admin                                                           Active
+discovery                                                              Active
+dynatrace                                                              Active
+int-admin                                                              Active
+int-bridge                                                             Active
+int-epay-common                                                        Active
+int-frontend                                                           Active
+int-gemfire                                                            Active
+int-istio-system                                                       Active
+int-kafka                                                              Active
+int-kms                                                                Active
+int-merchant                                                           Active
+int-notification                                                       Active
+int-rns                                                                Active
+int-secrets                                                            Active
+int-simulators                                                         Active
+int-transaction                                                        Active
+istio-cni                                                              Active
+istio-system                                                           Active
+kiali                                                                  Active
+
