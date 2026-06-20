@@ -1,56 +1,3202 @@
-[osuser@bastion ~]$ oc get projects |grep -E "perf|pre-prod"
-perf-admin                                                        Active
-perf-epay-common                                                  Active
-perf-frontend                                                     Active
-perf-gemfire                                                      Active
-perf-istio-system                                                 Active
-perf-kafka                                                        Active
-perf-kms                                                          Active
-perf-merchant                                                     Active
-perf-notification                                                 Active
-perf-rns                                                          Active
-perf-secrets                                                      Active
-perf-simulators                                                   Active
-perf-tempo                                                        Active
-perf-transaction                                                  Active
-pre-prod-admin                                                    Active
-pre-prod-epay                                                     Active
-pre-prod-epay-common                                              Active
-pre-prod-frontend                                                 Active
-pre-prod-gemfire                                                  Active
-pre-prod-istio-system                                             Active
-pre-prod-kafka                                                    Active
-pre-prod-kms                                                      Active
-pre-prod-merchant                                                 Active
-pre-prod-notification                                             Active
-pre-prod-offline-jobs                                             Active
-pre-prod-rns                                                      Active
-pre-prod-secrets                                                  Active
-pre-prod-simulators                                               Active
-pre-prod-transaction                                              Active
-============================================================================
-[osuser@bastion ~]$ oc describe ns perf-admin
-Name:         perf-admin
-Labels:       dynakube.internal.dynatrace.com/instance=epay
-              dynatrace.com/inject=true
-              eip=pre-prod-cluster
-              istio-discovery=perf-istio
-              istio.io/rev=perf-istio
-===============================================================
-[osuser@bastion ~]$ oc describe ns pre-prod-admin
-Name:         pre-prod-admin
-Labels:       eip=pre-prod-cluster
-              istio-discovery=pre-prod-istio
-              istio.io/rev=pre-prod-istio
-=========================================================
-[osuser@bastion ~]$ oc get groups
-NAME                    USERS
-EPAY_OCP_BANK  
-EPAY_OCP_DEVELOPER  
-EPAY_OCP_DEVOPS   
-EPAY_OCP_MERC_SUPPORT 
-EPAY_OCP_PROD_SUPPORT  
-==============================================
-Serviceaccount - cicd-sa
-==========================================
+---
+# ============================================================================
+# PERF AND PRE-PROD NAMESPACES WITH ISTIO AND DYNATRACE LABELS
+# ============================================================================
+# This file contains all perf and pre-prod namespaces with their respective labels
+# ============================================================================
 
+---
+# ============================================================================
+# PERF NAMESPACES
+# ============================================================================
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-admin
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-epay-common
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-frontend
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-gemfire
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-istio-system
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-kafka
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-kms
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-merchant
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-notification
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-rns
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-secrets
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-simulators
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-tempo
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: perf-transaction
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay
+    dynatrace.com/inject: "true"
+    eip: pre-prod-cluster
+    istio-discovery: perf-istio
+    istio.io/rev: perf-istio
+    environment: perf
+
+---
+# ============================================================================
+# PRE-PROD NAMESPACES
+# ============================================================================
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-admin
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-epay
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-epay-common
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-frontend
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-gemfire
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-istio-system
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-kafka
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-kms
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-merchant
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-notification
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-offline-jobs
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-rns
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-secrets
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-simulators
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-transaction
+  labels:
+    eip: pre-prod-cluster
+    istio-discovery: pre-prod-istio
+    istio.io/rev: pre-prod-istio
+    environment: pre-prod
+    
+    ---
+# ============================================================================
+# NAMESPACE-SCOPED RBAC FOR PERF AND PRE-PROD NAMESPACES
+# ============================================================================
+# Groups with Admin Rights (RoleBinding):
+# - EPAY_OCP_BANK
+# - EPAY_OCP_DEVOPS
+#
+# Groups with View-Only Rights (RoleBinding):
+# - EPAY_OCP_DEVELOPER
+# - EPAY_OCP_MERC_SUPPORT
+# - EPAY_OCP_PROD_SUPPORT
+# ============================================================================
+
+# ============================================================================
+# PERF NAMESPACES - ADMIN BINDINGS
+# ============================================================================
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-admin
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-admin
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-admin
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-admin
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-admin
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-epay-common
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-epay-common
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-epay-common
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-epay-common
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-epay-common
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-frontend
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-frontend
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-frontend
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-frontend
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-frontend
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-gemfire
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-gemfire
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-gemfire
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-gemfire
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-gemfire
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-istio-system
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-istio-system
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-istio-system
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-istio-system
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-istio-system
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-kafka
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-kafka
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-kafka
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-kafka
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-kafka
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-kms
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-kms
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-kms
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-kms
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-kms
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-merchant
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-merchant
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-merchant
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-merchant
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-merchant
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-notification
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-notification
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-notification
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-notification
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-notification
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-rns
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-rns
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-rns
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-rns
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-rns
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-secrets
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-secrets
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-secrets
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-secrets
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-secrets
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-simulators
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-simulators
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-simulators
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-simulators
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-simulators
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-tempo
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-tempo
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-tempo
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-tempo
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-tempo
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: perf-transaction
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: perf-transaction
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: perf-transaction
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: perf-transaction
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: perf-transaction
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: perf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+# ============================================================================
+# PRE-PROD NAMESPACES - ADMIN AND VIEW BINDINGS
+# ============================================================================
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-admin
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-admin
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-admin
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-admin
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-admin
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-epay
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-epay
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-epay
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-epay
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-epay
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-epay-common
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-epay-common
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-epay-common
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-epay-common
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-epay-common
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-frontend
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-frontend
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-frontend
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-frontend
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-frontend
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-gemfire
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-gemfire
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-gemfire
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-gemfire
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-gemfire
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-istio-system
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-istio-system
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-istio-system
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-istio-system
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-istio-system
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-kafka
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-kafka
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-kafka
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-kafka
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-kafka
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-kms
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-kms
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-kms
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-kms
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-kms
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-merchant
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-merchant
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-merchant
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-merchant
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-merchant
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-notification
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-notification
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-notification
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-notification
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-notification
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-offline-jobs
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-offline-jobs
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-offline-jobs
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-offline-jobs
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-offline-jobs
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-rns
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-rns
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-rns
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-rns
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-rns
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-secrets
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-secrets
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-secrets
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-secrets
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-secrets
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-simulators
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-simulators
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-simulators
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-simulators
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-simulators
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-bank-admin
+  namespace: pre-prod-transaction
+  labels:
+    group: EPAY_OCP_BANK
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_BANK
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: pre-prod-transaction
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  namespace: pre-prod-transaction
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-merc-support-view
+  namespace: pre-prod-transaction
+  labels:
+    group: EPAY_OCP_MERC_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_MERC_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-prod-support-view
+  namespace: pre-prod-transaction
+  labels:
+    group: EPAY_OCP_PROD_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_PROD_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+  
+  ---
+# ============================================================================
+# NAMESPACE, SERVICE ACCOUNT AND RBAC CONFIGURATION
+# ============================================================================
+# Namespace: pre-prod-dr-gitlab
+# ServiceAccount: cicd-sa
+# Permissions: Cluster-Admin (full cluster access)
+# ============================================================================
+
+---
+# ============================================================================
+# NAMESPACE CREATION
+# ============================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dr-gitlab
+  labels:
+    environment: pre-prod-dr
+    component: gitlab
+    eip: pre-prod-dr-cluster
+    istio-discovery: pre-prod-dr-istio
+    istio.io/rev: pre-prod-dr-istio
+    dynatrace.com/inject: "true"
+
+---
+# ============================================================================
+# SERVICE ACCOUNT CREATION
+# ============================================================================
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cicd-sa
+  namespace: pre-prod-dr-gitlab
+  labels:
+    app: cicd
+    service: gitlab-cicd
+    environment: pre-prod-dr
+    component: gitlab
+
+---
+# ============================================================================
+# CLUSTER ROLE BINDING - CLUSTER-ADMIN RIGHTS FOR SERVICE ACCOUNT
+# ============================================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cicd-sa-cluster-admin
+  labels:
+    serviceaccount: cicd-sa
+    namespace: pre-prod-dr-gitlab
+    role: cluster-admin
+    environment: pre-prod-dr
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: cicd-sa
+  namespace: pre-prod-dr-gitlab
