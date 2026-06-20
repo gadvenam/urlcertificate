@@ -1,0 +1,436 @@
+---
+# ============================================================================
+# ALL PRE-PROD-DC NAMESPACES WITH ISTIO AND DYNATRACE LABELS
+# ============================================================================
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-admin
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-epay-common
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-frontend
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-gemfire
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-gemfire-operator
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-gitlab-cicd
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-istio-cni
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-istio-system
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-kafka
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-kafka-cdc
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-kafka-console
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-kiali
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-kms
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-merchant
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-notification
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-offline-jobs
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-rns
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-simulators
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-tempo
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-dc-transaction
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pre-prod-frontend
+  labels:
+    dynakube.internal.dynatrace.com/instance: epay-dcpreprod
+    dynatrace.com/inject: "true"
+    eip: pre-prod-dc-cluster
+    istio-discovery: pre-prod-dc-istio
+    istio.io/rev: pre-prod-dc-istio
+    environment: pre-prod
+    
+    ---
+# ============================================================================
+# RBAC CONFIGURATION FOR EPAY GROUPS
+# ============================================================================
+# This file contains ClusterRoleBindings for all EPAY OpenShift groups
+# Admin groups: EPAY_OCP_ADMIN, EPAY_OCP_DEVOPS
+# View groups: EPAY_OCP_DEVELOPER, EPAY_OCP_QA, EPAY_OCP_SUPPORT
+# ============================================================================
+
+---
+# ============================================================================
+# ADMIN RIGHTS - EPAY_OCP_ADMIN GROUP
+# ============================================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: epay-ocp-admin-cluster-admin
+  labels:
+    group: EPAY_OCP_ADMIN
+    role: cluster-admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: Group
+  name: EPAY_OCP_ADMIN
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# ============================================================================
+# ADMIN RIGHTS - EPAY_OCP_DEVOPS GROUP
+# ============================================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: epay-ocp-devops-cluster-admin
+  labels:
+    group: EPAY_OCP_DEVOPS
+    role: cluster-admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVOPS
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# ============================================================================
+# VIEW ONLY RIGHTS - EPAY_OCP_DEVELOPER GROUP
+# ============================================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: epay-ocp-developer-view
+  labels:
+    group: EPAY_OCP_DEVELOPER
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_DEVELOPER
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# ============================================================================
+# VIEW ONLY RIGHTS - EPAY_OCP_QA GROUP
+# ============================================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: epay-ocp-qa-view
+  labels:
+    group: EPAY_OCP_QA
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_QA
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# ============================================================================
+# VIEW ONLY RIGHTS - EPAY_OCP_SUPPORT GROUP
+# ============================================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: epay-ocp-support-view
+  labels:
+    group: EPAY_OCP_SUPPORT
+    role: view
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: Group
+  name: EPAY_OCP_SUPPORT
+  apiGroup: rbac.authorization.k8s.io
+  
+  ---
+# ============================================================================
+# SERVICE ACCOUNT CREATION AND CLUSTER-ADMIN ROLE BINDING
+# ============================================================================
+# Creates ServiceAccount: pre-prod-dc-gitlab-deployer-sa
+# Namespace: pre-prod-dc-gitlab-cicd
+# Permissions: Cluster-Admin (full cluster access)
+# ============================================================================
+
+---
+# ============================================================================
+# SERVICE ACCOUNT
+# ============================================================================
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pre-prod-dc-gitlab-deployer-sa
+  namespace: pre-prod-dc-gitlab-cicd
+  labels:
+    app: gitlab-deployer
+    environment: pre-prod
+    component: gitlab-cicd
+
+---
+# ============================================================================
+# CLUSTER ROLE BINDING - CLUSTER-ADMIN RIGHTS
+# ============================================================================
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pre-prod-dc-gitlab-deployer-cluster-admin
+  labels:
+    serviceaccount: pre-prod-dc-gitlab-deployer-sa
+    namespace: pre-prod-dc-gitlab-cicd
+    role: cluster-admin
+    environment: pre-prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: pre-prod-dc-gitlab-deployer-sa
+  namespace: pre-prod-dc-gitlab-cicd
