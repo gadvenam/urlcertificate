@@ -1,0 +1,56 @@
+[osuser@bastion ~]$ oc get projects |grep -E "perf|pre-prod"
+perf-admin                                                        Active
+perf-epay-common                                                  Active
+perf-frontend                                                     Active
+perf-gemfire                                                      Active
+perf-istio-system                                                 Active
+perf-kafka                                                        Active
+perf-kms                                                          Active
+perf-merchant                                                     Active
+perf-notification                                                 Active
+perf-rns                                                          Active
+perf-secrets                                                      Active
+perf-simulators                                                   Active
+perf-tempo                                                        Active
+perf-transaction                                                  Active
+pre-prod-admin                                                    Active
+pre-prod-epay                                                     Active
+pre-prod-epay-common                                              Active
+pre-prod-frontend                                                 Active
+pre-prod-gemfire                                                  Active
+pre-prod-istio-system                                             Active
+pre-prod-kafka                                                    Active
+pre-prod-kms                                                      Active
+pre-prod-merchant                                                 Active
+pre-prod-notification                                             Active
+pre-prod-offline-jobs                                             Active
+pre-prod-rns                                                      Active
+pre-prod-secrets                                                  Active
+pre-prod-simulators                                               Active
+pre-prod-transaction                                              Active
+============================================================================
+[osuser@bastion ~]$ oc describe ns perf-admin
+Name:         perf-admin
+Labels:       dynakube.internal.dynatrace.com/instance=epay
+              dynatrace.com/inject=true
+              eip=pre-prod-cluster
+              istio-discovery=perf-istio
+              istio.io/rev=perf-istio
+===============================================================
+[osuser@bastion ~]$ oc describe ns pre-prod-admin
+Name:         pre-prod-admin
+Labels:       eip=pre-prod-cluster
+              istio-discovery=pre-prod-istio
+              istio.io/rev=pre-prod-istio
+=========================================================
+[osuser@bastion ~]$ oc get groups
+NAME                    USERS
+EPAY_OCP_BANK  
+EPAY_OCP_DEVELOPER  
+EPAY_OCP_DEVOPS   
+EPAY_OCP_MERC_SUPPORT 
+EPAY_OCP_PROD_SUPPORT  
+==============================================
+Serviceaccount - cicd-sa
+==========================================
+
