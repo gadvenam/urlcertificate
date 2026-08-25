@@ -1,0 +1,113 @@
+  
+✅ Pre-Upgrade Prerequisites  
+Before starting the OpenShift cluster upgrade, ensure the operator exist in cluster, version of that compatible with latest version of cluster.  
+   
+1. Check Upgrade Path  
+● Verify the upgrade path using the official Red Hat Upgrade Graph tool:  
+👉 OCP Upgrade Graph  
+  
+   
+2. Open Support Case & Gather Diagnostics  
+•	Open a proactive support case with Red Hat.  
+  
+•	Upload a must-gather archive to the support case.  
+  
+   
+3. Backups  
+● Take a backup of:  
+  
+○ All running and non-running pods  
+  
+○ ETCD (a recent etcd backup is required in case rollback is needed)  
+  
+   
+4. Cluster Health Validation  
+Ensure the cluster is in a stable state by validating the following:  
+•	All Cluster Operators (COs) are Available and not degraded.  
+  
+•	MachineConfigPools (MCPs) are Updated, Available, and not paused.  
+  
+•	Node status is healthy (Ready).  
+  
+Check system resource usage:  
+  
+oc adm top nodes  
+  
+•	Verify all Persistent Volumes (PV) and Persistent Volume Claims (PVCs) are in the Bound state.  
+  
+   
+5. Identify Problematic Pods and take backup   
+Check for pods that are not in a healthy state:  
+  
+oc get pods --all-namespaces | egrep -v 'Running|Completed|Succeeded'  
+  
+   
+6. Pod Count Per Node and take backup  
+Check how many pods are running on each node:  
+for i in $(oc get nodes --no-headers | awk '{print  
+$1}'); do   echo "==== $i ===="  
+  oc get pods --all-namespaces --field-selector spec.nodeName=$i,status.phase=Running --no-headers |  
+wc -l   echo done  
+  
+   
+7. Check etcd Cluster Health  
+Check the EtcdMembersAvailable status:  
+bash CopyEdit oc get etcd -o=jsonpath='{range  
+.items[0].status.conditions[?(@.type=="EtcdMembersAva ilable")]}{.message}{"\n"}'  
+  
+Make sure the etcd cluster is healthy before starting the upgrade.  
+   
+8. Verify Third-Party Compatibility  
+Ensure any third-party software or operators deployed in the cluster are compatible with the target OpenShift version.  
+🔴 Note: Red Hat does not verify or support third-party compatibility.  
+   
+  
+  
+9. Prepare Upgrade Images  
+● Download the base packages of OpenShift images and push them to your mirror registry.  
+  
+Example For Download the packages  
+$  ./oc-mirror --config=./ocp4-16-24-base.yaml file:///ocp_images/ocp4-packages/ocp-base-4-20-24 
+Example For upload packages on mirror-registry the packages  
+         $ oc-mirror --from=./mirror_seq1_000000.tar docker://registry-server-name/foldername --dest-skip-tls 
+ 
+ 
+   
+10. Access & Permissions  
+● Ensure you have admin privileges on the cluster before beginning the upgrade.  
+  
+   
+11. Check MCP State  
+  
+oc -n openshift-machine-api annotate mhc infra  
+cluster.x-k8s.io/paused=""  
+oc -n openshift-machine-api annotate mhc master  
+cluster.x-k8s.io/paused=""  
+oc -n openshift-machine-api annotate mhc worker cluster.x-k8s.io/paused=""  
+  
+   
+12. Check Upgradeable Conditions  
+Ensure there are no Upgradeable=False conditions before proceeding:  
+oc adm upgrade  
+  
+Fix any blockers that prevent the upgrade from moving forward.  
+     
+13. API Deprecation Awareness  
+Example:- While updating cluster from 4.19.24 to 4.20.24 Review APIs deprecated in the exisitng Kubernetes version, and migrate workloads to supported versions.  
+📘 Reference:  
+ 👉OpenShift 4.20 API deprecated - https://access.redhat.com/articles/7130599 
+   
+14. Review Pod Disruption Budgets (PDBs)  
+For update reduce PDB to zero, If your applications have PodDisruptionBudgets (PDBs) configured, review and temporarily reduce or remove minAvailable settings. Otherwise, node drain operations may fail due to blocked evictions.  
+Example Issue: If minAvailable: 1 and all pods run on a single node, node drain will be blocked, affecting the upgrade process. 
+ 
+         15. Upgrade the cluster run below command  
+        $ oc adm upgrade –to=4.x.y 
+ 
+Or if facing any issue then give Directly Image-name of new cluster  
+Example: 
+$  oc adm upgrade --to-image=’mage-name’ 
+ 
+Note: - If you are unable to found image name then install openshift-install binary of that cluster version check version of opensitf-install ware you will find image name with sha value. 
+ 
+
