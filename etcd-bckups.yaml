@@ -1,0 +1,475 @@
+[root@bastion ~]# for POD in $(oc get pod -n openshift-etcd --no-headers -l app=etcd | awk '{ print $1 }'); do oc -n openshift-etcd exec -c etcd $POD -- /bin/bash -c "etcdctl endpoint status -w table";done
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+|          ENDPOINT           |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+| https://10.177.142.134:2379 | aa1bf4b88a921a3c |  3.5.12 |  245 MB |     false |      false |        62 |  296914032 |          296914032 |        |
+| https://10.177.142.135:2379 | ea5a390ca71b5e0b |  3.5.12 |  340 MB |     false |      false |        62 |  296914032 |          296914032 |        |
+| https://10.177.142.136:2379 | a796344a2a544513 |  3.5.12 |  331 MB |      true |      false |        62 |  296914032 |          296914032 |        |
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+|          ENDPOINT           |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+| https://10.177.142.134:2379 | aa1bf4b88a921a3c |  3.5.12 |  245 MB |     false |      false |        62 |  296914037 |          296914037 |        |
+| https://10.177.142.135:2379 | ea5a390ca71b5e0b |  3.5.12 |  340 MB |     false |      false |        62 |  296914037 |          296914037 |        |
+| https://10.177.142.136:2379 | a796344a2a544513 |  3.5.12 |  331 MB |      true |      false |        62 |  296914037 |          296914037 |        |
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+|          ENDPOINT           |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+| https://10.177.142.134:2379 | aa1bf4b88a921a3c |  3.5.12 |  245 MB |     false |      false |        62 |  296914041 |          296914041 |        |
+| https://10.177.142.135:2379 | ea5a390ca71b5e0b |  3.5.12 |  340 MB |     false |      false |        62 |  296914041 |          296914041 |        |
+| https://10.177.142.136:2379 | a796344a2a544513 |  3.5.12 |  331 MB |      true |      false |        62 |  296914041 |          296914041 |        |
++-----------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+[root@bastion ~]# oc get po -n openshift-etcd
+NAME                                        READY   STATUS      RESTARTS   AGE
+etcd-guard-master1.dev.sbiepay.sbi          1/1     Running     0          199d
+etcd-guard-master2.dev.sbiepay.sbi          1/1     Running     0          199d
+etcd-guard-master3.dev.sbiepay.sbi          1/1     Running     0          199d
+etcd-master1.dev.sbiepay.sbi                4/4     Running     12         212d
+etcd-master2.dev.sbiepay.sbi                4/4     Running     12         212d
+etcd-master3.dev.sbiepay.sbi                4/4     Running     12         212d
+revision-pruner-8-master1.dev.sbiepay.sbi   0/1     Completed   0          199d
+revision-pruner-8-master2.dev.sbiepay.sbi   0/1     Completed   0          199d
+revision-pruner-8-master3.dev.sbiepay.sbi   0/1     Completed   0          199d
+[root@bastion ~]# oc get po -n openshift-etcd -o wide
+NAME                                        READY   STATUS      RESTARTS   AGE    IP               NODE                      NOMINATED NODE   READINESS GATES
+etcd-guard-master1.dev.sbiepay.sbi          1/1     Running     0          199d   172.16.0.166     master1.dev.sbiepay.sbi   <none>           <none>
+etcd-guard-master2.dev.sbiepay.sbi          1/1     Running     0          199d   172.16.2.156     master2.dev.sbiepay.sbi   <none>           <none>
+etcd-guard-master3.dev.sbiepay.sbi          1/1     Running     0          199d   172.16.4.168     master3.dev.sbiepay.sbi   <none>           <none>
+etcd-master1.dev.sbiepay.sbi                4/4     Running     12         212d   10.177.142.134   master1.dev.sbiepay.sbi   <none>           <none>
+etcd-master2.dev.sbiepay.sbi                4/4     Running     12         212d   10.177.142.135   master2.dev.sbiepay.sbi   <none>           <none>
+etcd-master3.dev.sbiepay.sbi                4/4     Running     12         212d   10.177.142.136   master3.dev.sbiepay.sbi   <none>           <none>
+revision-pruner-8-master1.dev.sbiepay.sbi   0/1     Completed   0          199d   172.16.0.163     master1.dev.sbiepay.sbi   <none>           <none>
+revision-pruner-8-master2.dev.sbiepay.sbi   0/1     Completed   0          199d   172.16.2.159     master2.dev.sbiepay.sbi   <none>           <none>
+revision-pruner-8-master3.dev.sbiepay.sbi   0/1     Completed   0          199d   172.16.4.174     master3.dev.sbiepay.sbi   <none>           <none>
+[root@bastion ~]# ssh core@master3.dev.sbiepay.sbi
+Red Hat Enterprise Linux CoreOS 414.92.202406041802-0
+  Part of OpenShift 4.14, RHCOS is a Kubernetes native operating system
+  managed by the Machine Config Operator (`clusteroperator/machine-config`).
+
+WARNING: Direct SSH access to machines is not recommended; instead,
+make configuration changes via `machineconfig` objects:
+  https://docs.openshift.com/container-platform/4.14/architecture/architecture-rhcos.html
+
+---
+Last login: Sat Mar 22 11:14:30 2025 from 10.177.142.133
+[core@master3 ~]$ sudom-i
+-bash: sudom-i: command not found
+[core@master3 ~]$ sudo -i
+[root@master3 ~]# ls -lrth
+total 0
+[root@master3 ~]# cd /usr/local/bin/cluster-backup.sh
+-bash: cd: /usr/local/bin/cluster-backup.sh: Not a directory
+[root@master3 ~]# cd /usr/local/bin/
+[root@master3 bin]# ls -lrth
+total 92K
+-rwxr-xr-x. 1 root root 5.9K Sep  7  2024 cluster-restore.sh
+-rwxr-xr-x. 1 root root 4.7K Sep  7  2024 cluster-backup.sh
+-rwxr-xr-x. 1 root root 5.6K Sep 20  2024 nm-clean-initrd-state.sh
+-rwxr-xr-x. 1 root root 1.4K Sep 20  2024 configure-ip-forwarding.sh
+-rwxr-xr-x. 1 root root  38K Sep 20  2024 configure-ovs.sh
+-rwxr-xr-x. 1 root root 5.8K Sep 20  2024 resolv-prepender.sh
+-rwxr-xr-x. 1 root root 2.4K Sep 20  2024 mco-hostname
+-rwxr-xr-x. 1 root root 1.2K Sep 20  2024 recover-kubeconfig.sh
+-rwxr-xr-x. 1 root root  235 Sep 20  2024 vsphere-hostname.sh
+-rwxr-xr-x. 1 root root  100 Sep 20  2024 kubenswrapper
+[root@master3 bin]# cd /home/core/^C
+[root@master3 bin]# mkdir -p /home/core/assets/backup
+[root@master3 bin]# ^Cusr/local/bin/cluster-backup.sh
+[root@master3 bin]# /usr/local/bin/cluster-backup.sh /home/core/assets/backup
+Certificate /etc/kubernetes/static-pod-certs/configmaps/etcd-serving-ca/ca-bundle.crt is missing. Checking in different directory
+Certificate /etc/kubernetes/static-pod-resources/etcd-certs/configmaps/etcd-serving-ca/ca-bundle.crt found!
+found latest kube-apiserver: /etc/kubernetes/static-pod-resources/kube-apiserver-pod-57
+found latest kube-controller-manager: /etc/kubernetes/static-pod-resources/kube-controller-manager-pod-24
+found latest kube-scheduler: /etc/kubernetes/static-pod-resources/kube-scheduler-pod-9
+found latest etcd: /etc/kubernetes/static-pod-resources/etcd-pod-8
+9bf1c918899239115cf725c2bf7a43bd5d67106c809f522f04fde31685c2b2ea
+etcdctl version: 3.5.12
+API version: 3.5
+{"level":"info","ts":"2025-04-07T16:17:27.679029Z","caller":"snapshot/v3_snapshot.go:65","msg":"created temporary db file","path":"/home/core/assets/backup/snapshot_2025-04-07_161726.db.part"}
+{"level":"info","ts":"2025-04-07T16:17:27.69166Z","logger":"client","caller":"v3@v3.5.12/maintenance.go:212","msg":"opened snapshot stream; downloading"}
+{"level":"info","ts":"2025-04-07T16:17:27.691736Z","caller":"snapshot/v3_snapshot.go:73","msg":"fetching snapshot","endpoint":"https://10.177.142.136:2379"}
+{"level":"info","ts":"2025-04-07T16:17:29.762251Z","logger":"client","caller":"v3@v3.5.12/maintenance.go:220","msg":"completed snapshot read; closing"}
+{"level":"info","ts":"2025-04-07T16:17:30.095375Z","caller":"snapshot/v3_snapshot.go:88","msg":"fetched snapshot","endpoint":"https://10.177.142.136:2379","size":"332 MB","took":"2 seconds ago"}
+{"level":"info","ts":"2025-04-07T16:17:30.095494Z","caller":"snapshot/v3_snapshot.go:97","msg":"saved","path":"/home/core/assets/backup/snapshot_2025-04-07_161726.db"}
+Snapshot saved at /home/core/assets/backup/snapshot_2025-04-07_161726.db
+{"hash":2340807569,"revision":221855114,"totalKey":19571,"totalSize":332021760}
+snapshot db and kube resources are successfully saved to /home/core/assets/backup
+[root@master3 bin]# cd /home/core/assets/backup
+[root@master3 backup]# ls -lrth
+total 317M
+-rw-------. 1 root root  81K Apr  7 16:17 static_kuberesources_2025-04-07_161726.tar.gz
+-rw-------. 1 root root 317M Apr  7 16:17 snapshot_2025-04-07_161726.db
+[root@master3 backup]# cd ..
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# ls -lrt
+total 0
+drwxr-xr-x. 2 root root 96 Apr  7 16:17 backup
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# tar -cvf backup.tar
+tar: Cowardly refusing to create an empty archive
+Try 'tar --help' or 'tar --usage' for more information.
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# cd backup/
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]# ls -lrt
+total 324328
+-rw-------. 1 root root     82920 Apr  7 16:17 static_kuberesources_2025-04-07_161726.tar.gz
+-rw-------. 1 root root 332021792 Apr  7 16:17 snapshot_2025-04-07_161726.db
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]# cd ..
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# tar -cvfz backup.tar.gz backup
+tar: backup.tar.gz: Cannot stat: No such file or directory
+backup/
+backup/static_kuberesources_2025-04-07_161726.tar.gz
+backup/snapshot_2025-04-07_161726.db
+tar: Exiting with failure status due to previous errors
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# ls -lrt
+total 324332
+drwxr-xr-x. 2 root root        96 Apr  7 16:17 backup
+-rw-r--r--. 1 root root 332113920 Apr  7 16:19 z
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# cd backup/
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]# tar -cvf ../backup.tar
+tar: Cowardly refusing to create an empty archive
+Try 'tar --help' or 'tar --usage' for more information.
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]# tar -cvf backup.tar
+tar: Cowardly refusing to create an empty archive
+Try 'tar --help' or 'tar --usage' for more information.
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]# tar -cvfz backup.tar .
+tar: backup.tar: Cannot stat: No such file or directory
+./
+./static_kuberesources_2025-04-07_161726.tar.gz
+./snapshot_2025-04-07_161726.db
+tar: ./z: file is the archive; not dumped
+tar: Exiting with failure status due to previous errors
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]# ls -lrt
+total 1172904
+-rw-------. 1 root root     82920 Apr  7 16:17 static_kuberesources_2025-04-07_161726.tar.gz
+-rw-------. 1 root root 332021792 Apr  7 16:17 snapshot_2025-04-07_161726.db
+-rw-r--r--. 1 root root 332113920 Apr  7 16:20 z
+[root@master3 backup]#
+[root@master3 backup]#
+[root@master3 backup]# cd ..
+[root@master3 assets]# pwd
+/home/core/assets
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# ls -lrt
+total 324332
+-rw-r--r--. 1 root root 332113920 Apr  7 16:19 z
+drwxr-xr-x. 2 root root       105 Apr  7 16:20 backup
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# cp -pr backup/ /tmp/
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# ls -lrt /tmp/
+total 0
+drwx------. 3 root root  60 Sep  7  2024 systemd-private-d5b0e476df174b989022187782fdd601-chronyd.service-hppXh6
+drwx------. 3 root root  60 Sep  7  2024 systemd-private-d5b0e476df174b989022187782fdd601-systemd-logind.service-G0EJeY
+drwx------. 3 root root  60 Sep  7  2024 systemd-private-d5b0e476df174b989022187782fdd601-dbus-broker.service-Rvbu0o
+drwxr-xr-x. 2 root root 100 Apr  7 16:20 backup
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# cp  -r backup /tmp
+[root@master3 assets]# chmod 777 /tmp/bakcup
+chmod: cannot access '/tmp/bakcup': No such file or directory
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# chmod 777 /tmp/backup/
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# ls -lrt /tmp/
+total 0
+drwx------. 3 root root  60 Sep  7  2024 systemd-private-d5b0e476df174b989022187782fdd601-chronyd.service-hppXh6
+drwx------. 3 root root  60 Sep  7  2024 systemd-private-d5b0e476df174b989022187782fdd601-systemd-logind.service-G0EJeY
+drwx------. 3 root root  60 Sep  7  2024 systemd-private-d5b0e476df174b989022187782fdd601-dbus-broker.service-Rvbu0o
+drwxrwxrwx. 2 root root 100 Apr  7 16:20 backup
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]#
+[root@master3 assets]# mkdir /backup^C
+[root@master3 assets]# exit
+logout
+[core@master3 ~]$ exit
+logout
+Connection to master3.dev.sbiepay.sbi closed.
+[root@bastion ~]#
+[root@bastion ~]#
+[root@bastion ~]#
+[root@bastion ~]# ls -lrt
+total 5098100
+-rw-------.  1 root root       1032 Oct 30  2023  anaconda-ks.cfg
+-rw-r--r--.  1 root root       1304 Oct 30  2023  initial-setup-ks.cfg
+drwxr-xr-x   2 root root          6 Oct 31  2023  Templates
+drwxr-xr-x   2 root root          6 Oct 31  2023  Public
+drwxr-xr-x   2 root root          6 Oct 31  2023  Downloads
+drwxr-xr-x   2 root root          6 Oct 31  2023  Documents
+drwxr-xr-x   2 root root          6 Oct 31  2023  Desktop
+drwxr-xr-x   2 root root          6 Oct 31  2023  Videos
+drwxr-xr-x   2 root root          6 Oct 31  2023  Music
+-rw-------   1 root root         93 Jul 31  2024  config.json
+-rw-r-----   1 root root       1472 Aug  9  2024  apps-dr-epay.cer
+-rw-r-----   1 root root        443 Aug 26  2024  bookinfo-vs.yaml
+drwxr-x---   2 root root       4096 Sep  3  2024  sos-report
+drwxr-xr-x   2 root root        100 Sep 11  2024  Pictures
+drwxr-x---   3 root root       4096 Sep 12  2024  test
+-rw-r-----   1 root root          0 Oct  1  2024  Dockerfile
+-rw-r-----   1 root root  329432174 Oct 24 15:25  OneDrive_1_24-10-2024.zip
+drwxr-x---   2 root root       4096 Oct 24 16:48  codequality-dir
+drwxr-x---   2 root root       4096 Oct 24 16:48  gitlab-advanced-sast-dir
+drwxr-x---   2 root root       4096 Oct 24 16:48  kubesec-dir
+drwxr-x---   2 root root       4096 Oct 24 16:48  semgrep-dir
+-rw-r-----   1 root root     182973 Dec  1 12:06  epaytransactionservicev.log
+-rw-r-----   1 root root        865 Dec  2 06:57 '!'
+-rw-r-----   1 root root        203 Dec  2 06:59  egressips-dev.yaml
+-rw-r-----   1 root root        226 Dec  2 07:40  testeip
+-rw-r-----   1 root root        168 Dec  2 11:10  egress117
+-rw-r-----   1 root root        168 Dec  2 11:12  egress118
+-rw-r-----   1 root root        167 Dec  2 11:13  egress119
+-rw-r-----   1 root root     118977 Dec  2 11:33  smcp.yaml
+-rw-r-----   1 root root      15124 Dec  2 11:34  1
+drwxr-x---   4 root root         93 Dec  3 13:26  Epay_Transcation_Service
+drwxr-x---   2 root root         22 Dec 13 12:41  certs
+drwxr-x---   2 root root         87 Dec 21 14:43  epay_merchant_services
+drwxr-x---   2 root root         71 Dec 24 14:19  epay_payment_test
+drwxr-x---   3 root root         29 Dec 26 14:54  epay_mahesh
+drwxr-x---   8 root root       4096 Jan  9 05:58  OCP-CONFIGURATION-4.14.29
+drwxr-x---   2 root root         82 Jan 27 11:59  backup
+-rw-r-----   1 root root        197 Jan 28 11:16  test.yaml
+-rw-r-----   1 root root        197 Jan 28 11:16  test1.yaml
+drwxr-x---   5 root root       4096 Feb  4 10:06  dev-data
+-rw-r-----   1 root root       1282 Feb 13 08:28  ROOT-PROD-RCA.txt
+-rw-r-----   1 root root        179 Feb 15 06:56  secret.yaml
+drwxr-x---   2 root root        102 Mar  4 10:38  myprojectnfs
+drwxr-xr-x   2 root root         65 Mar 13 10:19  Trident
+-rw-r-----   1 root root        386 Mar 15 09:24  sample.yaml
+drwxr-x---   8 root root       4096 Mar 20 05:41  result
+-rw-r--r--   1 root root  323905536 Mar 22 11:42  9988ded9fe4c.tar
+-rw-r--r--   1 root root  476975616 Mar 22 11:44  02688975e5ef.tar
+-rw-r-----   1 root root      12170 Mar 24 05:24  dynakube.yaml
+-rw-r-----   1 root root     574216 Mar 24 05:24  dyanatrace.yaml
+drwxr-x---   3 root root        174 Apr  1 10:28  must-gather.local.6614763129766796422
+-rw-r-----   1 root root 1759451601 Apr  1 10:35  must-gather-01042025.tar.gz
+drwxr-x---   3 root root         89 Apr  1 12:14  must-gather.local.8326353910789393077
+-rw-r-----   1 root root  438541576 Apr  1 12:36  must-gather-penshift-logging.tar.gz
+-rw-r-----   1 root root       8333 Apr  4 07:57  sit-cluster-entity-operator1.yaml
+drwxr-x---   3 root root        174 Apr  4 09:53  must-gather.local.5670466788957541130
+-rw-r-----   1 root root          0 Apr  4 13:28  v1beta1.metrics.k8s.io.yaml
+-rw-r-----   1 root root       2694 Apr  4 13:42  tmp_ns.json
+drwxr-x---  11 root root       4096 Apr  4 17:16  epay_deven
+drwxr-x---   8 root root       4096 Apr  5 10:29  namdev
+-rw-r-----   1 root root       5881 Apr  5 12:05  test.tt
+-rw-r-----   1 root root       5880 Apr  5 12:08  ttt.txt
+-rw-r-----   1 root root       5857 Apr  5 12:13  abc.txt
+-rw-r-----   1 root root       4391 Apr  5 12:13  res.tt
+-rw-r-----   1 root root       4389 Apr  5 12:15  res1.text
+drwxr-x---   3 root root        174 Apr  7 07:52  must-gather.local.1597217270061048692
+-rw-r-----   1 root root 1891033634 Apr  7 07:59  must-gather-07-04-2025.tar.gz
+drwxr-x---  11 root root       4096 Apr  7 12:36  bookinfo
+-rw-r-----   1 root root       3073 Apr  7 14:03  image-registry-ca.yaml
+-rw-r-----   1 root root       4472 Apr  7 14:09  Openshift-config.yaml
+-rw-r-----   1 root root       1429 Apr  7 14:36  cert.crt
+drwxrwxrwx   3 root root         20 Apr  7 15:47  core
+drwxrwxrwx   3 root root         44 Apr  7 15:54  etcd_backup
+[root@bastion ~]#
+[root@bastion ~]#
+[root@bastion ~]#
+[root@bastion ~]# mkdir backup
+mkdir: cannot create directory ‘backup’: File exists
+[root@bastion ~]#
+[root@bastion ~]# ls -lrt
+total 5098100
+-rw-------.  1 root root       1032 Oct 30  2023  anaconda-ks.cfg
+-rw-r--r--.  1 root root       1304 Oct 30  2023  initial-setup-ks.cfg
+drwxr-xr-x   2 root root          6 Oct 31  2023  Templates
+drwxr-xr-x   2 root root          6 Oct 31  2023  Public
+drwxr-xr-x   2 root root          6 Oct 31  2023  Downloads
+drwxr-xr-x   2 root root          6 Oct 31  2023  Documents
+drwxr-xr-x   2 root root          6 Oct 31  2023  Desktop
+drwxr-xr-x   2 root root          6 Oct 31  2023  Videos
+drwxr-xr-x   2 root root          6 Oct 31  2023  Music
+-rw-------   1 root root         93 Jul 31  2024  config.json
+-rw-r-----   1 root root       1472 Aug  9  2024  apps-dr-epay.cer
+-rw-r-----   1 root root        443 Aug 26  2024  bookinfo-vs.yaml
+drwxr-x---   2 root root       4096 Sep  3  2024  sos-report
+drwxr-xr-x   2 root root        100 Sep 11  2024  Pictures
+drwxr-x---   3 root root       4096 Sep 12  2024  test
+-rw-r-----   1 root root          0 Oct  1  2024  Dockerfile
+-rw-r-----   1 root root  329432174 Oct 24 15:25  OneDrive_1_24-10-2024.zip
+drwxr-x---   2 root root       4096 Oct 24 16:48  codequality-dir
+drwxr-x---   2 root root       4096 Oct 24 16:48  gitlab-advanced-sast-dir
+drwxr-x---   2 root root       4096 Oct 24 16:48  kubesec-dir
+drwxr-x---   2 root root       4096 Oct 24 16:48  semgrep-dir
+-rw-r-----   1 root root     182973 Dec  1 12:06  epaytransactionservicev.log
+-rw-r-----   1 root root        865 Dec  2 06:57 '!'
+-rw-r-----   1 root root        203 Dec  2 06:59  egressips-dev.yaml
+-rw-r-----   1 root root        226 Dec  2 07:40  testeip
+-rw-r-----   1 root root        168 Dec  2 11:10  egress117
+-rw-r-----   1 root root        168 Dec  2 11:12  egress118
+-rw-r-----   1 root root        167 Dec  2 11:13  egress119
+-rw-r-----   1 root root     118977 Dec  2 11:33  smcp.yaml
+-rw-r-----   1 root root      15124 Dec  2 11:34  1
+drwxr-x---   4 root root         93 Dec  3 13:26  Epay_Transcation_Service
+drwxr-x---   2 root root         22 Dec 13 12:41  certs
+drwxr-x---   2 root root         87 Dec 21 14:43  epay_merchant_services
+drwxr-x---   2 root root         71 Dec 24 14:19  epay_payment_test
+drwxr-x---   3 root root         29 Dec 26 14:54  epay_mahesh
+drwxr-x---   8 root root       4096 Jan  9 05:58  OCP-CONFIGURATION-4.14.29
+drwxr-x---   2 root root         82 Jan 27 11:59  backup
+-rw-r-----   1 root root        197 Jan 28 11:16  test.yaml
+-rw-r-----   1 root root        197 Jan 28 11:16  test1.yaml
+drwxr-x---   5 root root       4096 Feb  4 10:06  dev-data
+-rw-r-----   1 root root       1282 Feb 13 08:28  ROOT-PROD-RCA.txt
+-rw-r-----   1 root root        179 Feb 15 06:56  secret.yaml
+drwxr-x---   2 root root        102 Mar  4 10:38  myprojectnfs
+drwxr-xr-x   2 root root         65 Mar 13 10:19  Trident
+-rw-r-----   1 root root        386 Mar 15 09:24  sample.yaml
+drwxr-x---   8 root root       4096 Mar 20 05:41  result
+-rw-r--r--   1 root root  323905536 Mar 22 11:42  9988ded9fe4c.tar
+-rw-r--r--   1 root root  476975616 Mar 22 11:44  02688975e5ef.tar
+-rw-r-----   1 root root      12170 Mar 24 05:24  dynakube.yaml
+-rw-r-----   1 root root     574216 Mar 24 05:24  dyanatrace.yaml
+drwxr-x---   3 root root        174 Apr  1 10:28  must-gather.local.6614763129766796422
+-rw-r-----   1 root root 1759451601 Apr  1 10:35  must-gather-01042025.tar.gz
+drwxr-x---   3 root root         89 Apr  1 12:14  must-gather.local.8326353910789393077
+-rw-r-----   1 root root  438541576 Apr  1 12:36  must-gather-penshift-logging.tar.gz
+-rw-r-----   1 root root       8333 Apr  4 07:57  sit-cluster-entity-operator1.yaml
+drwxr-x---   3 root root        174 Apr  4 09:53  must-gather.local.5670466788957541130
+-rw-r-----   1 root root          0 Apr  4 13:28  v1beta1.metrics.k8s.io.yaml
+-rw-r-----   1 root root       2694 Apr  4 13:42  tmp_ns.json
+drwxr-x---  11 root root       4096 Apr  4 17:16  epay_deven
+drwxr-x---   8 root root       4096 Apr  5 10:29  namdev
+-rw-r-----   1 root root       5881 Apr  5 12:05  test.tt
+-rw-r-----   1 root root       5880 Apr  5 12:08  ttt.txt
+-rw-r-----   1 root root       5857 Apr  5 12:13  abc.txt
+-rw-r-----   1 root root       4391 Apr  5 12:13  res.tt
+-rw-r-----   1 root root       4389 Apr  5 12:15  res1.text
+drwxr-x---   3 root root        174 Apr  7 07:52  must-gather.local.1597217270061048692
+-rw-r-----   1 root root 1891033634 Apr  7 07:59  must-gather-07-04-2025.tar.gz
+drwxr-x---  11 root root       4096 Apr  7 12:36  bookinfo
+-rw-r-----   1 root root       3073 Apr  7 14:03  image-registry-ca.yaml
+-rw-r-----   1 root root       4472 Apr  7 14:09  Openshift-config.yaml
+-rw-r-----   1 root root       1429 Apr  7 14:36  cert.crt
+drwxrwxrwx   3 root root         20 Apr  7 15:47  core
+drwxrwxrwx   3 root root         44 Apr  7 15:54  etcd_backup
+[root@bastion ~]#
+[root@bastion ~]#
+[root@bastion ~]# cd backup/
+[root@bastion backup]#
+[root@bastion backup]# ls -lrt
+total 16
+-rw-r----- 1 root root 7905 Jan 27 05:22 backup_alertmanager.yaml
+-rw-r----- 1 root root  769 Jan 27 09:26 bookinfo_smmr.yaml
+-rw-r----- 1 root root 2561 Jan 27 10:56 demo.istio
+[root@bastion backup]#
+[root@bastion backup]#
+[root@bastion backup]# cd ..
+[root@bastion ~]#
+[root@bastion ~]#
+[root@bastion ~]# mkdir backup_07Apr2025
+[root@bastion ~]#
+[root@bastion ~]#
+[root@bastion ~]#
+[root@bastion ~]# cd backup_07Apr2025/
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]# scp -pr core@master^Ctmp/backup /backup
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]# oc get node
+NAME                      STATUS   ROLES                  AGE    VERSION
+infra1.dev.sbiepay.sbi    Ready    infra                  212d   v1.27.14+95b99ee
+infra2.dev.sbiepay.sbi    Ready    infra                  212d   v1.27.14+95b99ee
+infra3.dev.sbiepay.sbi    Ready    infra                  212d   v1.27.14+95b99ee
+master1.dev.sbiepay.sbi   Ready    control-plane,master   212d   v1.27.14+95b99ee
+master2.dev.sbiepay.sbi   Ready    control-plane,master   212d   v1.27.14+95b99ee
+master3.dev.sbiepay.sbi   Ready    control-plane,master   212d   v1.27.14+95b99ee
+worker1.dev.sbiepay.sbi   Ready    worker                 212d   v1.27.14+95b99ee
+worker1.sit.epay.sbi      Ready    worker                 166d   v1.27.14+95b99ee
+worker1.uat.epay.sbi      Ready    worker                 166d   v1.27.14+95b99ee
+worker2.dev.sbiepay.sbi   Ready    worker                 212d   v1.27.14+95b99ee
+worker2.sit.epay.sbi      Ready    worker                 166d   v1.27.14+95b99ee
+worker2.uat.epay.sbi      Ready    worker                 166d   v1.27.14+95b99ee
+worker3.dev.sbiepay.sbi   Ready    worker                 212d   v1.27.14+95b99ee
+worker3.sit.epay.sbi      Ready    worker                 166d   v1.27.14+95b99ee
+worker3.uat.epay.sbi      Ready    worker                 166d   v1.27.14+95b99ee
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]# scp -pr core@master3.dev.sbiepay.sbi:/tmp/backup/ .
+z                                                                                                                                          100%  317MB 462.0MB/s   00:00
+scp: /tmp/backup/snapshot_2025-04-07_161726.db: Permission denied
+scp: /tmp/backup/static_kuberesources_2025-04-07_161726.tar.gz: Permission denied
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]# ssh core@master3.dev.sbiepay.sbi
+Red Hat Enterprise Linux CoreOS 414.92.202406041802-0
+  Part of OpenShift 4.14, RHCOS is a Kubernetes native operating system
+  managed by the Machine Config Operator (`clusteroperator/machine-config`).
+
+WARNING: Direct SSH access to machines is not recommended; instead,
+make configuration changes via `machineconfig` objects:
+  https://docs.openshift.com/container-platform/4.14/architecture/architecture-rhcos.html
+
+---
+Last login: Mon Apr  7 16:12:55 2025 from 10.177.142.133
+[core@master3 ~]$ sudo -i
+[root@master3 ~]# ls -lrth
+total 0
+[root@master3 ~]#
+[root@master3 ~]#
+[root@master3 ~]#
+[root@master3 ~]# chmod -R 777 /tmp/backup/
+[root@master3 ~]#
+[root@master3 ~]#
+[root@master3 ~]#
+[root@master3 ~]#
+[root@master3 ~]# exit
+logout
+[core@master3 ~]$ exit
+logout
+Connection to master3.dev.sbiepay.sbi closed.
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]# scp -pr core@master3.dev.sbiepay.sbi:/tmp/backup/ .
+z                                                                                                                                          100%  317MB 460.8MB/s   00:00
+snapshot_2025-04-07_161726.db                                                                                                              100%  317MB 409.9MB/s   00:00
+static_kuberesources_2025-04-07_161726.tar.gz                                                                                              100%   81KB   2.4MB/s   00:00
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
+[root@bastion backup_07Apr2025]#
