@@ -1,0 +1,25 @@
+kind: LDAPSyncConfig
+apiVersion: v1
+url: ldaps://corp.ad.sbi/dc=corp,dc=ad,dc=sbi?sAMAccountName
+insecure: false
+bindDN: "cn=cmpicpdevadmin,ou=GTCMP Users,ou=GTCMP,ou=GITC Belapur,dc=corp,dc=ad,dc=sbi"
+bindPassword: "Cmp0cp@100325"
+rfc2307:
+  groupsQuery:
+    baseDN: "DC=CORP,DC=AD,DC=SBI"
+    filter: (|(cn=EPAY_OCP_BANK)(cn=EPAY_OCP_DEVOPS)(cn=EPAY_OCP_PROD_SUPPORT)(cn=EPAY_OCP_MERC_SUPPORT)(cn=EPAY_OCP_DEVELOPER))
+    scope: sub
+    derefAliases: never
+    pageSize: 0
+  groupUIDAttribute: dn
+  groupNameAttributes: [ cn ]
+  groupMembershipAttributes: [ member ]
+  usersQuery:
+    baseDN: "DC=CORP,DC=AD,DC=SBI"
+    scope: sub
+    derefAliases: never
+    pageSize: 0
+  userUIDAttribute: dn
+  userNameAttributes: [ sAMAccountName ]
+  tolerateMemberNotFoundErrors: false
+  tolerateMemberOutOfScopeErrors: false
