@@ -1,0 +1,71 @@
+
+  932  17/09/ 14:33:06oc get node
+  933  17/09/ 14:33:10oc get mcp
+  934  17/09/ 14:33:14oc get co
+  935  17/09/ 14:43:00oc get node
+  936  17/09/ 14:43:18oc get secret -n openshift-config
+  937  17/09/ 14:43:49oc get secret pull-secret -n openshift-config  -o yaml > bkp-pull-secret.yaml
+  938  17/09/ 14:43:59oc get cm -n kube-sysetm
+  939  17/09/ 14:44:05oc get secrets -n kube-sysetm
+  940  17/09/ 14:44:17oc get secrets -n kube-system
+  941  17/09/ 14:44:27oc get cm  -n kube-system
+  942  17/09/ 14:44:58oc get cm cluster-config-v1 -o yaml   -n kube-system > bkp-cluster-config-v1.yaml
+  943  17/09/ 14:46:45cat bkp-cluster-config-v1.yaml
+  944  17/09/ 14:48:51oc get cm -n openshift-config
+  945  17/09/ 14:49:10oc get cm user-ca-bundle -n openshift-config -o yaml > bkp-user-ca-bundle.yaml
+  946  17/09/ 14:49:22cat bkp-user-ca-bundle.yaml
+  947  17/09/ 14:53:31vi t1.txt
+  948  17/09/ 14:58:26vi t2.txt
+  949  17/09/ 14:59:29ll
+  950  17/09/ 14:59:45cat bkp-user-ca-bundle.yaml
+  951  17/09/ 15:00:06oc get cm -n openshift-config
+  952  17/09/ 15:00:18oc get cm user-ca-bundle -n openshift-config  -o yaml
+  953  17/09/ 15:03:36oc get
+  954  17/09/ 15:03:53watch oc get mcp
+  955  17/09/ 15:05:49oc get cm -n openshift-config
+  956  17/09/ 15:05:59oc get cm user-ca-bundle -n openshift-config -o yaml
+  957  17/09/ 15:06:15ll
+  958  17/09/ 15:06:23cat bkp-user-ca-bundle.yaml
+  959  17/09/ 15:06:36oc get cm user-ca-bundle -n openshift-config -o yaml
+  960  17/09/ 15:06:59oc get cm  -n openshift-config -o yaml
+  961  17/09/ 15:07:18 oc get imagecontentsourcepolicy image-policy -o yaml
+  962  17/09/ 15:08:14oc get mcp
+  963  17/09/ 15:08:37clear
+  964  17/09/ 15:09:01oc get node
+  965  17/09/ 15:09:15oc get co
+  966  17/09/ 15:09:20oc get mcp
+  967  17/09/ 15:15:24waoc get node
+  968  17/09/ 15:15:34oc get mcp
+  969  17/09/ 15:15:50oc get cm  -n openshift-config
+  970  17/09/ 15:16:02oc get cm user-ca-bundle -n openshift-config  -o yaml
+  971  17/09/ 15:16:24cat bkp-user-ca-bundle.yaml
+  972  17/09/ 15:17:07oc get mcp
+  973  17/09/ 15:17:22history |grep upgrade
+  974  17/09/ 15:18:00history |grep patch
+  975  17/09/ 15:19:29oc get mcp
+  976  17/09/ 15:22:57oc get node
+  977  17/09/ 15:23:03oc get  mcp
+  978  17/09/ 15:23:20oc get node master1.preprod.epay.sbi -o yaml
+  979  17/09/ 15:23:39oc get mc |grep rendered-master-7d7a4dcde55d46e3c06ffdcf925630ac
+  980  17/09/ 15:23:56oc get mc rendered-master-7d7a4dcde55d46e3c06ffdcf925630ac -o yaml
+  981  17/09/ 15:24:33oc get node
+  982  17/09/ 15:24:37oc get co
+  983  17/09/ 15:24:44oc get mc
+  984  17/09/ 15:24:52oc get mcp
+  985  17/09/ 15:25:34clear
+  986  17/09/ 15:32:52oc get cm user-ca-bundle -n openshift-config  -o yaml
+  987  17/09/ 15:33:16oc get mcp
+  988  17/09/ 15:33:27oc get cm  -n openshift-config  -o yaml
+  989  17/09/ 15:33:31oc get cm  -n openshift-config
+  990  17/09/ 15:34:32oc get cm openshift-service-ca.crt -n openshift-config -o yaml
+  991  17/09/ 15:36:05oc get node
+  992  17/09/ 15:36:17ssh core@infra1.preprod.epay.sbi
+  993  17/09/ 15:37:08 oc get node
+  994  17/09/ 15:37:14 oc get node -o wide
+  995  17/09/ 15:37:52cat /root/.kube/config
+  996  17/09/ 15:38:13oc get node
+  997  17/09/ 15:40:24cat /root/.ssh/id_rsa
+  998  17/09/ 15:42:02cat id_ed25519
+  999  17/09/ 15:42:10cat /root/.ssh/id_ed25519
+ 1000  17/09/ 16:05:22history
+[root@bastion ~]#
