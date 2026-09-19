@@ -1,0 +1,482 @@
+
+Redhat.com
+Support
+FAQ
+
+Menu
+
+English
+
+Search
+
+✷
+10
+Account
+
+Sites
+DO430-4.6:Days remaining  77|Lab hours used  5/80
+Catalog
+Securing Kubernetes Clusters with Red Hat Advanced Cluster Security
+Chapter 4: Network Segmentation with Red Hat Advanced Cluster Security for Kubernetes
+Securing Kubernetes Clusters with Red Hat Advanced Cluster Security
+Guided Exercise: Analyze Network Flows and Manage Network Baselines
+Analyze traffic, flag anomalies, and configure network baselines by using the network graph.
+
+Outcomes
+
+Navigate the network graph to identify namespaces, deployments, and network traffic.
+
+View listening endpoints for the application to identify open ports.
+
+Mark unauthorized traffic as anomalous flows.
+
+Set up a network baseline for the application and enable alerts.
+
+Verify that anomalous traffic triggers alerts on baseline violations.
+
+As the student user on the workstation machine, use the lab command to prepare your environment for this exercise, and to ensure that all required resources are available.
+
+[student@workstation ~]$ lab start --training do0004l network-analyze
+Instructions
+
+The classroom environment provides a second RHOCP cluster, which you can access by using the following parameters:
+
+API URL
+https://api.ocp4-mng.example.com:6443
+
+RHOCP web console URL
+https://console-openshift-console.apps.ocp4-mng.example.com
+
+Administrator username
+admin
+
+Administrator password
+redhatocp
+
+If you did not configure this second RHOCP cluster as an RHACS secured cluster in a previous exercise, then the lab command configures the cluster for you. The cluster is named managed-cluster in RHACS.
+
+If you are not already connected to the RHACS portal, then use the web browser to log in to the portal as the admin user.
+
+In a terminal window, log in to the RHOCP cluster as the admin user with redhatocp as the password.
+
+[student@workstation ~]$ oc login -u admin -p redhatocp \
+  https://api.ocp4.example.com:6443
+Login successful.
+...output omitted...
+Retrieve the admin user's password from the central-htpasswd secret.
+
+[student@workstation ~]$ oc extract secret/central-htpasswd -n stackrox \
+  --keys password --to -
+# password
+y3sIavTsas5sdIGFycELSmdG8
+The password in the preceding output is different on your system.
+
+Open a web browser and go to https://central-stackrox.apps.ocp4.example.com. If the web browser warns you about an insecure certificate, then accept the certificate.
+
+Log in as the admin user with the password from a previous substep.
+
+Verify that the RHACS portal lists the two secured clusters.
+
+In the RHACS portal, go to Platform Configuration → Clusters, and verify that the central cluster and the managed cluster are in healthy status, and that all the services are ready.
+
+The lab start command deploys an application in the network-analyze namespace. The application is a patient portal where patients can request appointments and pay bills, and doctors can confirm appointments and bill patients. Use the network graph to identify the application deployments and the network traffic between them.
+
+In the RHACS portal, go to Network → Network Graph, and from the top menu, filter by the managed-cluster cluster. From the Namespaces drop-down list, type network and select the network-analyze namespace.
+
+
+Three deployments appear in the graph: the patient-portal deployment, which is the application front end; the patient-database deployment, which is the relational database; and the payment-processor deployment, which is the payment processing service.
+
+
+Open a tab in the web browser and go to http://patient-portal-route-network-analyze.apps.ocp4-mng.example.com to verify that the application is accessible.
+
+
+Switch back to the RHACS portal tab. Check for graph updates in the upper-right corner. Click the updates available button to update the graph if updates are available. The number of updates might be different in your cluster.
+
+
+Click the patient-portal deployment. The deployment has two ingress flows on port 8080, and one egress flow to the patient-database deployment on port 5432.
+
+If the graph does not show these flows, then click the updates available button again. It might take a minute for RHACS to report the flows.
+
+
+Click the patient-database deployment to see that it has one ingress flow on port 5432 from the patient-portal deployment.
+
+
+Click the payment-processor deployment to see that it has neither ingress nor egress flows, because no payments were made yet.
+
+
+View listening endpoints for the patient portal application to identify which processes listen on which ports for the three deployments.
+
+In the RHACS portal, go to Network → Listening Endpoints, and from the top menu, filter by the managed-cluster cluster and the network-analyze namespace.
+
+
+Expand the patient-database deployment. The /usr/local/bin/postgres process listens on port 5432.
+
+
+Expand the patient-portal deployment. Three /usr/local/bin/python processes listen on port 8080.
+
+
+Expand the payment-processor deployment. The /usr/local/bin/python process listens on port 8080.
+
+
+Go to the patient portal tab and pay a bill. Verify in the network graph that the payment processing service has an ingress flow.
+
+Log in as the patient, Angela Martin.
+
+
+From the top menu, click Bills and then click Pay bill.
+
+
+Click Submit payment.
+
+
+The Date paid column shows when the payment was made.
+
+
+Switch back to the RHACS portal tab and go to Network → Network Graph. Select the managed-cluster secured cluster and the network-analyze namespace. If updates are available, then click the updates available button in the upper-left corner. The number of updates might be different in your cluster.
+
+
+Click the payment-processor deployment to see that it has an ingress flow on port 8080 from the payment-portal deployment. If the graph does not show this flow, then reload the browser tab. It might take a minute for RHACS to report the flows.
+
+
+View the network baseline for the patient-portal deployment. Enable alerts on baseline violations.
+
+Click the patient-portal deployment to open the side panel. Click the Flows tab to identify the active flows. There are four baseline flows and zero anomalous flows.
+
+If RHACS detects the ingress connection from the router-default deployment as an anomalous flow, then select the flow. Click the vertical ellipsis icon ⋮ and click Add to baseline.
+
+
+Click the Baseline tab, and turn on the Alert on baseline violation toggle.
+
+
+Log in to the managed cluster, and change to the test-network-analyze project.
+
+Switch back to the terminal window.
+
+Log in to the managed cluster as the admin user with redhatocp as the password. In the following command, ensure that you use the API URL of the managed cluster, which is https://api.ocp4-mng.example.com:6443
+
+[student@workstation ~]$ oc login -u admin -p redhatocp \
+  https://api.ocp4-mng.example.com:6443
+
+Login successful.
+...output omitted...
+Change to the test-network-analyze project.
+
+[student@workstation ~]$ oc project test-network-analyze
+Now using project "test-network-analyze" on server "https://api.ocp4-mng.example.com:6443".
+Deploy the exploit sample application in the test-network-analyze project. With the exploit application, you generate unauthorized network traffic.
+
+Create the exploit deployment by using the ~/DO0004L/labs/network-analyze/exploit.yaml file.
+
+[student@workstation ~]$ oc apply -f \
+  ~/DO0004L/labs/network-analyze/exploit.yaml
+serviceaccount/exploit created
+service/exploit created
+deployment.apps/exploit created
+Verify that the exploit pod is running.
+
+[student@workstation ~]$ oc get pods
+NAME                       READY   STATUS    RESTARTS   AGE
+exploit-7494799dbf-5nzqn   1/1     Running   0          4s
+The pod name in the preceding output is different on your system.
+
+Generate anomalous traffic from the exploit deployment to the patient-portal deployment.
+
+Store the exploit pod name in the EXPLOIT_POD variable.
+
+[student@workstation ~]$ export EXPLOIT_POD=$(oc get pod -l app=exploit \
+  -o jsonpath={.items..metadata.name})
+Execute the following curl command from the exploit pod to the patient-portal-service service at port 8080. The command runs indefinitely. Do not exit the command.
+
+[student@workstation ~]$ oc exec $EXPLOIT_POD -c curl -- watch -n5 curl -s \
+  patient-portal-service.network-analyze.svc.cluster.local:8080
+Identify anomalous traffic in the patient application by using the network graph.
+
+Switch back to the RHACS portal tab. Check for graph updates in the upper-left corner. Click the updates available button to update the graph. It might take a minute for RHACS to report the flows. The number of updates might be different in your cluster.
+
+
+The exploit deployment appears in the network graph.
+
+
+Click the patient-portal deployment to open the side panel. The Details tab shows one internal flow as anomalous traffic.
+
+
+Click the Flows tab to identify the anomalous flow from the exploit deployment.
+
+
+Verify that the anomalous traffic triggers alerts on baseline violations.
+
+Go to Violations, and filter by the managed-cluster secured cluster. Two Unauthorized Network Flow policy violations appear at the top of the list. One violation flags the ingress flow for the patient-portal deployment. The other violation flags the egress flow for the exploit deployment.
+
+It can take up to three minutes for the violations to appear. Reload the browser tab after three minutes to view the policy violations.
+
+
+Switch back to the terminal window.
+
+Press Ctrl+C to end the curl command from the exploit pod.
+
+Finish
+
+On the workstation machine, use the lab command to complete this exercise. This step is important to ensure that resources from previous exercises do not impact upcoming exercises.
+
+[student@workstation ~]$ lab finish network-analyze
+Revision: do430-4.6-ed3-20260120-250ea42
+
+Guided Exercise: Analyze Network Flows and Manage Network Baselines
+
+
+Previous
+39/60
+
+Next
+
+
+
+Red Hat Training + Certification logo
+Privacy Policy
+Red Hat Training Policies
+Terms of Use
+All policies and guidelines
+Release Notes
+Cookie preferences
+
+Redhat.com
+Support
+FAQ
+
+Menu
+
+English
+
+Search
+
+✷
+10
+Account
+
+Sites
+DO430-4.6:Days remaining  77|Lab hours used  5/80
+Catalog
+Securing Kubernetes Clusters with Red Hat Advanced Cluster Security
+Chapter 4: Network Segmentation with Red Hat Advanced Cluster Security for Kubernetes
+Securing Kubernetes Clusters with Red Hat Advanced Cluster Security
+Guided Exercise: Analyze Network Flows and Manage Network Baselines
+Analyze traffic, flag anomalies, and configure network baselines by using the network graph.
+
+Outcomes
+
+Navigate the network graph to identify namespaces, deployments, and network traffic.
+
+View listening endpoints for the application to identify open ports.
+
+Mark unauthorized traffic as anomalous flows.
+
+Set up a network baseline for the application and enable alerts.
+
+Verify that anomalous traffic triggers alerts on baseline violations.
+
+As the student user on the workstation machine, use the lab command to prepare your environment for this exercise, and to ensure that all required resources are available.
+
+[student@workstation ~]$ lab start --training do0004l network-analyze
+Instructions
+
+The classroom environment provides a second RHOCP cluster, which you can access by using the following parameters:
+
+API URL
+https://api.ocp4-mng.example.com:6443
+
+RHOCP web console URL
+https://console-openshift-console.apps.ocp4-mng.example.com
+
+Administrator username
+admin
+
+Administrator password
+redhatocp
+
+If you did not configure this second RHOCP cluster as an RHACS secured cluster in a previous exercise, then the lab command configures the cluster for you. The cluster is named managed-cluster in RHACS.
+
+If you are not already connected to the RHACS portal, then use the web browser to log in to the portal as the admin user.
+
+In a terminal window, log in to the RHOCP cluster as the admin user with redhatocp as the password.
+
+[student@workstation ~]$ oc login -u admin -p redhatocp \
+  https://api.ocp4.example.com:6443
+Login successful.
+...output omitted...
+Retrieve the admin user's password from the central-htpasswd secret.
+
+[student@workstation ~]$ oc extract secret/central-htpasswd -n stackrox \
+  --keys password --to -
+# password
+y3sIavTsas5sdIGFycELSmdG8
+The password in the preceding output is different on your system.
+
+Open a web browser and go to https://central-stackrox.apps.ocp4.example.com. If the web browser warns you about an insecure certificate, then accept the certificate.
+
+Log in as the admin user with the password from a previous substep.
+
+Verify that the RHACS portal lists the two secured clusters.
+
+In the RHACS portal, go to Platform Configuration → Clusters, and verify that the central cluster and the managed cluster are in healthy status, and that all the services are ready.
+
+The lab start command deploys an application in the network-analyze namespace. The application is a patient portal where patients can request appointments and pay bills, and doctors can confirm appointments and bill patients. Use the network graph to identify the application deployments and the network traffic between them.
+
+In the RHACS portal, go to Network → Network Graph, and from the top menu, filter by the managed-cluster cluster. From the Namespaces drop-down list, type network and select the network-analyze namespace.
+
+
+Three deployments appear in the graph: the patient-portal deployment, which is the application front end; the patient-database deployment, which is the relational database; and the payment-processor deployment, which is the payment processing service.
+
+
+Open a tab in the web browser and go to http://patient-portal-route-network-analyze.apps.ocp4-mng.example.com to verify that the application is accessible.
+
+
+Switch back to the RHACS portal tab. Check for graph updates in the upper-right corner. Click the updates available button to update the graph if updates are available. The number of updates might be different in your cluster.
+
+
+Click the patient-portal deployment. The deployment has two ingress flows on port 8080, and one egress flow to the patient-database deployment on port 5432.
+
+If the graph does not show these flows, then click the updates available button again. It might take a minute for RHACS to report the flows.
+
+
+Click the patient-database deployment to see that it has one ingress flow on port 5432 from the patient-portal deployment.
+
+
+Click the payment-processor deployment to see that it has neither ingress nor egress flows, because no payments were made yet.
+
+
+View listening endpoints for the patient portal application to identify which processes listen on which ports for the three deployments.
+
+In the RHACS portal, go to Network → Listening Endpoints, and from the top menu, filter by the managed-cluster cluster and the network-analyze namespace.
+
+
+Expand the patient-database deployment. The /usr/local/bin/postgres process listens on port 5432.
+
+
+Expand the patient-portal deployment. Three /usr/local/bin/python processes listen on port 8080.
+
+
+Expand the payment-processor deployment. The /usr/local/bin/python process listens on port 8080.
+
+
+Go to the patient portal tab and pay a bill. Verify in the network graph that the payment processing service has an ingress flow.
+
+Log in as the patient, Angela Martin.
+
+
+From the top menu, click Bills and then click Pay bill.
+
+
+Click Submit payment.
+
+
+The Date paid column shows when the payment was made.
+
+
+Switch back to the RHACS portal tab and go to Network → Network Graph. Select the managed-cluster secured cluster and the network-analyze namespace. If updates are available, then click the updates available button in the upper-left corner. The number of updates might be different in your cluster.
+
+
+Click the payment-processor deployment to see that it has an ingress flow on port 8080 from the payment-portal deployment. If the graph does not show this flow, then reload the browser tab. It might take a minute for RHACS to report the flows.
+
+
+View the network baseline for the patient-portal deployment. Enable alerts on baseline violations.
+
+Click the patient-portal deployment to open the side panel. Click the Flows tab to identify the active flows. There are four baseline flows and zero anomalous flows.
+
+If RHACS detects the ingress connection from the router-default deployment as an anomalous flow, then select the flow. Click the vertical ellipsis icon ⋮ and click Add to baseline.
+
+
+Click the Baseline tab, and turn on the Alert on baseline violation toggle.
+
+
+Log in to the managed cluster, and change to the test-network-analyze project.
+
+Switch back to the terminal window.
+
+Log in to the managed cluster as the admin user with redhatocp as the password. In the following command, ensure that you use the API URL of the managed cluster, which is https://api.ocp4-mng.example.com:6443
+
+[student@workstation ~]$ oc login -u admin -p redhatocp \
+  https://api.ocp4-mng.example.com:6443
+
+Login successful.
+...output omitted...
+Change to the test-network-analyze project.
+
+[student@workstation ~]$ oc project test-network-analyze
+Now using project "test-network-analyze" on server "https://api.ocp4-mng.example.com:6443".
+Deploy the exploit sample application in the test-network-analyze project. With the exploit application, you generate unauthorized network traffic.
+
+Create the exploit deployment by using the ~/DO0004L/labs/network-analyze/exploit.yaml file.
+
+[student@workstation ~]$ oc apply -f \
+  ~/DO0004L/labs/network-analyze/exploit.yaml
+serviceaccount/exploit created
+service/exploit created
+deployment.apps/exploit created
+Verify that the exploit pod is running.
+
+[student@workstation ~]$ oc get pods
+NAME                       READY   STATUS    RESTARTS   AGE
+exploit-7494799dbf-5nzqn   1/1     Running   0          4s
+The pod name in the preceding output is different on your system.
+
+Generate anomalous traffic from the exploit deployment to the patient-portal deployment.
+
+Store the exploit pod name in the EXPLOIT_POD variable.
+
+[student@workstation ~]$ export EXPLOIT_POD=$(oc get pod -l app=exploit \
+  -o jsonpath={.items..metadata.name})
+Execute the following curl command from the exploit pod to the patient-portal-service service at port 8080. The command runs indefinitely. Do not exit the command.
+
+[student@workstation ~]$ oc exec $EXPLOIT_POD -c curl -- watch -n5 curl -s \
+  patient-portal-service.network-analyze.svc.cluster.local:8080
+Identify anomalous traffic in the patient application by using the network graph.
+
+Switch back to the RHACS portal tab. Check for graph updates in the upper-left corner. Click the updates available button to update the graph. It might take a minute for RHACS to report the flows. The number of updates might be different in your cluster.
+
+
+The exploit deployment appears in the network graph.
+
+
+Click the patient-portal deployment to open the side panel. The Details tab shows one internal flow as anomalous traffic.
+
+
+Click the Flows tab to identify the anomalous flow from the exploit deployment.
+
+
+Verify that the anomalous traffic triggers alerts on baseline violations.
+
+Go to Violations, and filter by the managed-cluster secured cluster. Two Unauthorized Network Flow policy violations appear at the top of the list. One violation flags the ingress flow for the patient-portal deployment. The other violation flags the egress flow for the exploit deployment.
+
+It can take up to three minutes for the violations to appear. Reload the browser tab after three minutes to view the policy violations.
+
+
+Switch back to the terminal window.
+
+Press Ctrl+C to end the curl command from the exploit pod.
+
+Finish
+
+On the workstation machine, use the lab command to complete this exercise. This step is important to ensure that resources from previous exercises do not impact upcoming exercises.
+
+[student@workstation ~]$ lab finish network-analyze
+Revision: do430-4.6-ed3-20260120-250ea42
+
+Guided Exercise: Analyze Network Flows and Manage Network Baselines
+
+
+Previous
+39/60
+
+Next
+
+
+
+Red Hat Training + Certification logo
+Privacy Policy
+Red Hat Training Policies
+Terms of Use
+All policies and guidelines
+Release Notes
+Cookie preferences
+
+Show quoted text
