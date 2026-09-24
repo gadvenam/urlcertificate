@@ -1,0 +1,253 @@
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2
+metadata:
+name: txn-transactionservice-hpa
+namespace: prod-dc-transaction
+uid: 82e59708-bc59-4731-9d96-85792df0a82c
+resourceVersion: '792666048'
+creationTimestamp: '2025-12-30T16:02:08Z'
+labels:
+app.kubernetes.io/instance: txn
+app.kubernetes.io/managed-by: Helm
+app.kubernetes.io/name: transactionservice
+app.kubernetes.io/version: 1.16.0
+helm.sh/chart: transactionservice-0.1.0
+annotations:
+meta.helm.sh/release-name: txn
+meta.helm.sh/release-namespace: prod-dc-transaction
+managedFields:
+manager: helm
+operation: Update
+apiVersion: autoscaling/v2
+time: '2026-07-10T08:05:05Z'
+fieldsType: FieldsV1
+fieldsV1:
+'f:metadata':
+'f:annotations':
+.: {}
+'f:meta.helm.sh/release-name': {}
+'f:meta.helm.sh/release-namespace': {}
+'f:labels':
+.: {}
+'f:app.kubernetes.io/instance': {}
+'f:app.kubernetes.io/managed-by': {}
+'f:app.kubernetes.io/name': {}
+'f:app.kubernetes.io/version': {}
+'f:helm.sh/chart': {}
+'f:spec':
+'f:behavior':
+.: {}
+'f:scaleDown':
+.: {}
+'f:policies': {}
+'f:selectPolicy': {}
+'f:stabilizationWindowSeconds': {}
+'f:scaleUp':
+.: {}
+'f:policies': {}
+'f:selectPolicy': {}
+'f:stabilizationWindowSeconds': {}
+'f:maxReplicas': {}
+'f:metrics': {}
+'f:minReplicas': {}
+'f:scaleTargetRef':
+'f:apiVersion': {}
+'f:kind': {}
+'f:name': {}
+manager: kube-controller-manager
+operation: Update
+apiVersion: autoscaling/v2
+time: '2026-09-24T10:11:56Z'
+fieldsType: FieldsV1
+fieldsV1:
+'f:status':
+'f:conditions':
+.: {}
+'k:{"type":"AbleToScale"}':
+.: {}
+'f:lastTransitionTime': {}
+'f:message': {}
+'f:reason': {}
+'f:status': {}
+'f:type': {}
+'k:{"type":"ScalingActive"}':
+.: {}
+'f:lastTransitionTime': {}
+'f:message': {}
+'f:reason': {}
+'f:status': {}
+'f:type': {}
+'k:{"type":"ScalingLimited"}':
+.: {}
+'f:lastTransitionTime': {}
+'f:message': {}
+'f:reason': {}
+'f:status': {}
+'f:type': {}
+'f:currentMetrics': {}
+'f:currentReplicas': {}
+'f:desiredReplicas': {}
+'f:lastScaleTime': {}
+subresource: status
+spec:
+scaleTargetRef:
+kind: Deployment
+name: txn-transactionservice
+apiVersion: apps/v1
+minReplicas: 4
+maxReplicas: 20
+metrics:
+type: Resource
+resource:
+name: cpu
+target:
+type: Utilization
+averageUtilization: 70
+type: Resource
+resource:
+name: memory
+target:
+type: Utilization
+averageUtilization: 80
+behavior:
+scaleUp:
+stabilizationWindowSeconds: 60
+selectPolicy: Max
+policies:
+type: Percent
+value: 50
+periodSeconds: 60
+scaleDown:
+stabilizationWindowSeconds: 300
+selectPolicy: Max
+policies:
+type: Percent
+value: 10
+periodSeconds: 60
+status:
+lastScaleTime: '2026-09-21T10:27:40Z'
+currentReplicas: 9
+desiredReplicas: 9
+currentMetrics:
+type: Resource
+resource:
+name: cpu
+current:
+averageValue: 23m
+averageUtilization: 1
+type: Resource
+resource:
+name: memory
+current:
+averageValue: 2840245589333m
+averageUtilization: 84
+conditions:
+type: AbleToScale
+status: 'True'
+lastTransitionTime: '2025-12-30T16:02:23Z'
+reason: ReadyForNewScale
+message: recommended size matches current size
+type: ScalingActive
+status: 'True'
+lastTransitionTime: '2026-08-12T17:27:51Z'
+reason: ValidMetricFound
+message: the HPA was able to successfully calculate a replica count from memory resource utilization (percentage of request)
+type: ScalingLimited
+status: 'False'
+lastTransitionTime: '2026-08-25T01:24:34Z'
+reason: DesiredWithinRange
+message: the desired count is within the acceptable range
+
+
+------------------
+
+
+Using project "openshift-ovn-kubernetes".
+[osuser@dcepayprodbastion ~]$ oc get project |grep -i tra
+dynatrace                                                         Active
+openshift-distributed-tracing                                     Active
+prod-dc-transaction                                               Active
+[osuser@dcepayprodbastion ~]$ oc project prod-dc-transaction
+Now using project "prod-dc-transaction" on server "https://api.dc.prod.epay.sbi:6443".
+[osuser@dcepayprodbastion ~]$ oc get pods
+NAME                                      READY   STATUS    RESTARTS      AGE
+payment-paymentservice-758499d46f-4qfwx   2/2     Running   0             15d
+payment-paymentservice-758499d46f-bwkl6   2/2     Running   0             15d
+payment-paymentservice-758499d46f-k99xg   2/2     Running   0             15d
+payment-paymentservice-758499d46f-whl96   2/2     Running   0             15d
+txn-transactionservice-cf6ddc874-6pqp6    2/2     Running   0             14d
+txn-transactionservice-cf6ddc874-7ljcb    2/2     Running   0             14d
+txn-transactionservice-cf6ddc874-96m55    2/2     Running   0             15d
+txn-transactionservice-cf6ddc874-ct52n    2/2     Running   0             30d
+txn-transactionservice-cf6ddc874-cwjtj    2/2     Running   0             18d
+txn-transactionservice-cf6ddc874-fhg6k    2/2     Running   0             2d23h
+txn-transactionservice-cf6ddc874-hcpb2    2/2     Running   1 (14d ago)   15d
+txn-transactionservice-cf6ddc874-mqfgk    2/2     Running   3 (14d ago)   17d
+txn-transactionservice-cf6ddc874-t4lz6    2/2     Running   1 (14d ago)   15d
+[osuser@dcepayprodbastion ~]$ oc adm top pods
+NAME                                      CPU(cores)   MEMORY(bytes)
+payment-paymentservice-758499d46f-4qfwx   9m           1837Mi
+payment-paymentservice-758499d46f-bwkl6   12m          1935Mi
+payment-paymentservice-758499d46f-k99xg   9m           1908Mi
+payment-paymentservice-758499d46f-whl96   60m          1875Mi
+txn-transactionservice-cf6ddc874-6pqp6    29m          1542Mi
+txn-transactionservice-cf6ddc874-7ljcb    32m          3855Mi
+txn-transactionservice-cf6ddc874-96m55    18m          994Mi
+txn-transactionservice-cf6ddc874-ct52n    21m          3465Mi
+txn-transactionservice-cf6ddc874-cwjtj    17m          3658Mi
+txn-transactionservice-cf6ddc874-fhg6k    26m          991Mi
+txn-transactionservice-cf6ddc874-hcpb2    18m          4093Mi
+txn-transactionservice-cf6ddc874-mqfgk    26m          2571Mi
+txn-transactionservice-cf6ddc874-t4lz6    23m          3198Mi
+[osuser@dcepayprodbastion ~]$ ^C
+[osuser@dcepayprodbastion ~]$ pc get hpa
+bash: pc: command not found...
+Similar commands are::
+'cp'
+'ps'
+[osuser@dcepayprodbastion ~]$ oc get hpa
+NAME                         REFERENCE                           TARGETS                        MINPODS   MAXPODS   REPLICAS   AGE
+payment-paymentservice-hpa   Deployment/payment-paymentservice   cpu: 0%/60%, memory: 59%/60%   4         15        4          267d
+txn-transactionservice-hpa   Deployment/txn-transactionservice   cpu: 1%/70%, memory: 84%/80%   4         20        9          267d
+[osuser@dcepayprodbastion ~]$
+[osuser@dcepayprodbastion ~]$
+[osuser@dcepayprodbastion ~]$ oc get hpa
+NAME                         REFERENCE                           TARGETS                        MINPODS   MAXPODS   REPLICAS   AGE
+payment-paymentservice-hpa   Deployment/payment-paymentservice   cpu: 0%/60%, memory: 59%/60%   4         15        4          267d
+txn-transactionservice-hpa   Deployment/txn-transactionservice   cpu: 1%/70%, memory: 84%/80%   4         20        9          267d
+[osuser@dcepayprodbastion ~]$
+[osuser@dcepayprodbastion ~]$ oc get hpa
+NAME                         REFERENCE                           TARGETS                        MINPODS   MAXPODS   REPLICAS   AGE
+payment-paymentservice-hpa   Deployment/payment-paymentservice   cpu: 0%/60%, memory: 59%/60%   4         15        4          267d
+txn-transactionservice-hpa   Deployment/txn-transactionservice   cpu: 1%/70%, memory: 84%/80%   4         20        9          267d
+[osuser@dcepayprodbastion ~]$
+[osuser@dcepayprodbastion ~]$ oc get hpa
+NAME                         REFERENCE                           TARGETS                        MINPODS   MAXPODS   REPLICAS   AGE
+payment-paymentservice-hpa   Deployment/payment-paymentservice   cpu: 0%/60%, memory: 59%/60%   4         15        4          267d
+txn-transactionservice-hpa   Deployment/txn-transactionservice   cpu: 1%/70%, memory: 84%/80%   4         20        9          267d
+[osuser@dcepayprodbastion ~]$
+[osuser@dcepayprodbastion ~]$ oc get pods
+NAME                                      READY   STATUS    RESTARTS      AGE
+payment-paymentservice-758499d46f-4qfwx   2/2     Running   0             15d
+payment-paymentservice-758499d46f-bwkl6   2/2     Running   0             15d
+payment-paymentservice-758499d46f-k99xg   2/2     Running   0             15d
+payment-paymentservice-758499d46f-whl96   2/2     Running   0             15d
+txn-transactionservice-cf6ddc874-6pqp6    2/2     Running   0             14d
+txn-transactionservice-cf6ddc874-7ljcb    2/2     Running   0             14d
+txn-transactionservice-cf6ddc874-96m55    2/2     Running   0             15d
+txn-transactionservice-cf6ddc874-ct52n    2/2     Running   0             30d
+txn-transactionservice-cf6ddc874-cwjtj    2/2     Running   0             18d
+txn-transactionservice-cf6ddc874-fhg6k    2/2     Running   0             2d23h
+txn-transactionservice-cf6ddc874-hcpb2    2/2     Running   1 (14d ago)   15d
+txn-transactionservice-cf6ddc874-mqfgk    2/2     Running   3 (14d ago)   17d
+txn-transactionservice-cf6ddc874-t4lz6    2/2     Running   1 (14d ago)   15d
+[osuser@dcepayprodbastion ~]$ oc get pods  | grep -i txn-transactionservice-cf6ddc874-hcpb2
+txn-transactionservice-cf6ddc874-hcpb2    2/2     Running   1 (14d ago)   15d
+[osuser@dcepayprodbastion ~]$
+[osuser@dcepayprodbastion ~]$ oc get pods  | grep -i txn-transactionservice-cf6ddc874-hcpb2
+txn-transactionservice-cf6ddc874-hcpb2    2/2     Running   1 (14d ago)   15d
+[osuser@dcepayprodbastion ~]$ oc get hpa
+NAME                         REFERENCE                           TARGETS                        MINPODS   MAXPODS   REPLICAS   AGE
+payment-paymentservice-hpa   Deployment/payment-paymentservice   cpu: 1%/60%, memory: 59%/60%   4         15        4          267d
+txn-transactionservice-hpa   Deployment/txn-transactionservice   cpu: 1%/70%, memory: 84%/80%   4         20        9          267d
+[osuser@dcepayprodbastion ~]$
