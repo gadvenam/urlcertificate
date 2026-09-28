@@ -1,47 +1,414 @@
-[osuser@bastion namdev]$ oc get project |grep -i uat
-uat-admin                                                              Active
-uat-bridge                                                             Active
-uat-common                                                             Active
-uat-communication                                                      Active
-uat-epay-common                                                        Active
-uat-frontend                                                           Active
-uat-gemfire                                                            Active
-uat-integration                                                        Active
-uat-istio-system                                                       Active
-uat-kafka                                                              Active
-uat-kms                                                                Active
-uat-merchant                                                           Active
-uat-notification                                                       Active
-uat-offline-jobs                                                       Active
-uat-rns                                                                Active
-uat-sbiepay                                                            Active
-uat-sbiepay-test                                                       Active
-uat-secrets                                                            Active
-uat-simulators                                                         Active
-uat-transaction                                                        Active
-[osuser@bastion namdev]$ oc describe ns uat-admin
-Name:         uat-admin
-Labels:       app.kubernetes.io/managed-by=Helm
-              dynatrace.com/inject=true
-              env=uat
-              istio-discovery=uat-istio
-              istio.io/rev=uat-istio
-              kubernetes.io/metadata.name=uat-admin
-              name=uat-admin
-              pod-security.kubernetes.io/audit=restricted
-              pod-security.kubernetes.io/audit-version=latest
-              pod-security.kubernetes.io/warn=restricted
-              pod-security.kubernetes.io/warn-version=latest
-Annotations:  meta.helm.sh/release-name: common
-              meta.helm.sh/release-namespace: uat-common
-              openshift.io/node-selector: env=uat
-              openshift.io/sa.scc.mcs: s0:c33,c2
-              openshift.io/sa.scc.supplemental-groups: 1001060000/10000
-              openshift.io/sa.scc.uid-range: 1001060000/10000
-              security.openshift.io/MinimallySufficientPodSecurityStandard: restricted
-Status:       Active
-
-No resource quota.
-
-No LimitRange resource.
-[osuser@bastion namdev]$
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-admin
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-admin
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-bridge
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-bridge
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-common
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-common
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-communication
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-communication
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-epay-common
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-epay-common
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-frontend
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-frontend
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-gemfire
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-gemfire
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-integration
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-integration
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-kms
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-kms
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-merchant
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-merchant
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-notification
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-notification
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-offline-jobs
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-offline-jobs
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-rns
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-rns
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-sbiepay
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-sbiepay
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-sbiepay-test
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-sbiepay-test
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-secrets
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-secrets
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-simulators
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-simulators
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uat2-transaction
+  labels:
+    env: uat
+    istio-discovery: uat-istio
+    istio.io/rev: uat-istio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: epay-ocp-devops-admin
+  namespace: uat2-transaction
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: EPAY_OCP_DEVOPS
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
